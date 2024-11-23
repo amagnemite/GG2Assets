@@ -27,7 +27,7 @@ PrecacheEntityFromTable({classname = "info_particle_system", effect_name = "sarc
 			local player = PlayerInstanceFromIndex(i)
 			if(player == null) continue
 			local scope = player.GetScriptScope()
-			
+
 			if("onContainmentBreach" in scope) {
 				delete scope.onContainmentBreach
 			}
@@ -83,10 +83,11 @@ PrecacheEntityFromTable({classname = "info_particle_system", effect_name = "sarc
 	OnGameEvent_player_death = function(params) {
 		local player = GetPlayerFromUserID(params.userid)
 		if(player == null) return
-		
+
 		if(!IsPlayerABot(player)) {
-			if("feverThink" in thinkTable) {
-				delete thinkTable.feverThink
+            local scope = player.GetScriptScope()
+            if("feverThink" in scope.thinkTable) {
+				delete scope.thinkTable.feverThink
 			}
 			return
 		}
@@ -111,7 +112,7 @@ PrecacheEntityFromTable({classname = "info_particle_system", effect_name = "sarc
 				scope.ornament.Kill()
 				delete scope.ornament
 			}
-			
+
 			delete scope.rageParticle
 		}
 		if(!player.HasBotTag("Malignant_Tumor") && !player.HasBotTag("UKGR_Tumor")) return
@@ -553,14 +554,14 @@ PrecacheEntityFromTable({classname = "info_particle_system", effect_name = "sarc
                 break;
             }
         }
-		
+
 		scope.flamethrowerParticle <- SpawnEntityFromTable("trigger_particle", {
 			particle_name = "hemorrhagic_fever_flamethrower"
 			attachment_type = 4
 			attachment_name = "muzzle"
 			spawnflags = 64
 		})
-		
+
 		scope.rageParticle <- SpawnEntityFromTable("trigger_particle", {
 			particle_name = "cardiac_arrest_buffed"
 			attachment_type = 1
@@ -576,15 +577,15 @@ PrecacheEntityFromTable({classname = "info_particle_system", effect_name = "sarc
 			if(!("feverTicks" in scope)) {
 				scope.feverTicks <- 0
 			}
-			
+
 			scope.feverThink <- function() {
 				if(timeCounter < DEFAULTTIME) {
 					return
 				}
-				
+
 				diseaseCallbacks.playSound("player/pl_burnpain3.wav", self)
 				feverTicks = feverTicks + 1 > 40 ? 40 : feverTicks + 1
-				
+
 				if(feverTicks >= 10) {
 					//ClientPrint(null, 3, "Ouch! Doing " + (5 + (feverTicks * 0.5)) + " damage")
 					self.ViewPunch(QAngle(-5, 0, 0))
@@ -600,7 +601,7 @@ PrecacheEntityFromTable({classname = "info_particle_system", effect_name = "sarc
 			local scope = activator.GetScriptScope()
 			local newTicks = scope.feverTicks
 			newTicks = newTicks - 3 < 0 ? 0 : newTicks - 3
-			
+
 			diseaseCallbacks.playSound("player/flame_out.wav", activator)
 			if(newTicks >= 7) {
 				newTicks = 7
@@ -621,10 +622,10 @@ PrecacheEntityFromTable({classname = "info_particle_system", effect_name = "sarc
 			self.AddCustomAttribute("damage bonus", 1.5, -1)
 			self.AddCustomAttribute("bleeding duration", 5, -1)
 			self.AddCustomAttribute("dmg taken increased", 2, -1)
-			
+
 			EntFire("hemorrhagic_fever_trigger", "Disable", null, -1)
 			EntFire("hemorrhagic_fever_fire_particles", "Stop")
-			
+
 			NetProps.SetPropString(self, "m_iName", "fever")
 			scope.ornament <- SpawnEntityFromTable("prop_dynamic_ornament", {
 				InitialOwner = "fever"
@@ -633,7 +634,7 @@ PrecacheEntityFromTable({classname = "info_particle_system", effect_name = "sarc
 				model = "models/weapons/c_models/c_flamethrower/c_flamethrower.mdl"
 			})
 			NetProps.SetPropString(self, "m_iName", null)
-			
+
 			flamethrowerParticle.AcceptInput("StartTouch", "!activator", ornament, ornament)
 			rageParticle.AcceptInput("StartTouch", "!activator", self, self)
 		}

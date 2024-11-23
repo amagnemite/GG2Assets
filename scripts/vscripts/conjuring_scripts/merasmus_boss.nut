@@ -105,7 +105,7 @@ function TimerTag()
             local origin = bot.GetOrigin()
             local nav_delete = {}
 
-            bot.Teleport(true, Vector(-1214, 3923, 554), false, QAngle(), false, Vector())
+            bot.Teleport(true, Vector(-355, 2233, 673), false, QAngle(), false, Vector())
             bot.DisableDraw()
             bot.SetMoveType(MOVETYPE_NOCLIP + MOVETYPE_FLY, MOVECOLLIDE_DEFAULT) // completely stops a player in place
             bot.SetCollisionGroup(13)
@@ -264,6 +264,11 @@ function RespawnBombCarrier()
 
     local maxhealth = self.GetMaxHealth()
     local health = self.GetHealth()
+
+    if (health > 1000)
+    {
+        self.AddCondEx(70, -1, null)
+    }
 
     local mins = self.GetPlayerMins()
     local maxs = self.GetPlayerMaxs()
@@ -1869,7 +1874,7 @@ function ApplyThunderThink(player, caster)
 
     sniperscope.Vector_Compare <- null
 
-    self.AddCondEx(70, -1, null)
+    
     self.Weapon_Switch(melee)
     NetProps.SetPropInt(self, "m_Shared.m_iNextMeleeCrit", -2)
     self.SetCustomModelWithClassAnimations("models/bots/merasmus/merasmus.mdl")

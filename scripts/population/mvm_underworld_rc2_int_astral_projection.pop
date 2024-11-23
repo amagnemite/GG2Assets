@@ -1905,7 +1905,7 @@ WaveSchedule
 		{
 			Name				stage2
 			WaitForAllSpawned	stage1
-			Where				spawnbot
+			Where			spawnbot_side	// spawnbot
 			TotalCount			16	// 32
 			MaxActive			6	// 12
 			SpawnCount			2	// 4

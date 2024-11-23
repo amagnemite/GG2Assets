@@ -458,7 +458,7 @@ WaveSchedule
         {
 			Name wave1-2
 			Where spawnbot
-			TotalCount 5
+			TotalCount 3
 			SpawnCount 1
 			WaitBetweenSpawns 15
 			WaitBeforeStarting 7
@@ -1614,7 +1614,7 @@ WaveSchedule
 			TotalCount 24
 			SpawnCount 4
 			WaitBetweenSpawns 9
-			WaitBeforeStarting 20
+			WaitBeforeStarting 10
 			TotalCurrency 50
 			WaitForAllSpawned wave6-1
 			MaxActive 12
@@ -1632,7 +1632,7 @@ WaveSchedule
 			TotalCount 2
 			SpawnCount 2
 			WaitBetweenSpawns 0
-			WaitBeforeStarting 24
+			WaitBeforeStarting 14
 			TotalCurrency 75
 			WaitForAllSpawned wave6-1
 			Squad

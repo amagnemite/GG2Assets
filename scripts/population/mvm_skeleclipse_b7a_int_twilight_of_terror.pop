@@ -1,4 +1,5 @@
-// Mission made by BlacKy -> -> https://steamcommunity.com/profiles/76561197970217314/
+//	Mission made by BlacKy -> -> https://steamcommunity.com/profiles/76561197970217314/
+//	Massive thanks to my MvM buddies who helped me with constant testing for this mission!
 
 
 //	===Credit Statistics===
@@ -18,6 +19,9 @@
 
 #base robot_giant.pop
 #base robot_standard.pop
+#base robot_blacky_weps_tot.pop
+//#base judge_restricts.pop	//	This popfile bans the following: Phlog, Ubersaw, Milk/Jarate slow, Crit/Uber canteens, Milk syringes
+							//	Med shield, Uber duration bonus, Milk/Jarate recharge rate, EH, Beggars Bazooka, Rocket Specialist
 
 population
 {
@@ -28,13 +32,13 @@ population
 	Advanced	1 
 	
 	
-   //Eventpopfile Halloween
-   // ZombiesNoWave666		1
-   // ForceHoliday			2
-   // NoThrillerTaunt		1
-   // NoRomevisionCosmetics	1
-   // NoCritPumpkin			1 
-   // NoHolidayPickups		1
+   //	Eventpopfile Halloween
+   //	ZombiesNoWave666		1
+   //	ForceHoliday			2
+   //	NoThrillerTaunt			1
+   //	NoRomevisionCosmetics	1
+   //	NoCritPumpkin			1 
+   //	NoHolidayPickups		1
 	
 	
 	Mission
@@ -679,7 +683,7 @@ population
 			Item		"The Liquor Locker"
 			Item		"The Tartantaloons"
 			Item		"The Squid's Lid"
-			Tag			"popext_warpaint{ idx = 285, slot = 0}"	//	Ghost Town
+			Tag			"popext_warpaint{ idx = 285, slot = 0}"	//	Swashbuckled
 			//	The above line makes warpaints work in Potato testing servers with popext. slot 0 = primary weapon slot
 			WeaponRestrictions PrimaryOnly
 			Attributes	MiniBoss
@@ -689,7 +693,7 @@ population
 			ItemAttributes
 			{
 				ItemName	"The Loose Cannon"
-				"set_item_texture_wear"			0		//	FN
+				"set_item_texture_wear"			0				//	FN
 				"paintkit_proto_def_index"		"3.9937e-43n"	//	285 - Swashbuckled
 			//	The above 2 lines enable warpaints in a listen server
 				"damage penalty" 				3
@@ -857,14 +861,17 @@ population
 					Template	T_TFBot_Scout_SunStick
 					Name		"Sunstick Scout"
 					Classicon	scout_sunstick_swordstone
+					Tag nav_prefer_flank_left
 				}
 				TFBot
 				{
 					Template	T_TFBot_Pyro_Flaregun
+					Tag nav_prefer_flank_left
 				}
 				TFBot
 				{
 					Template	T_TFBot_Pyro_Flaregun
+					Tag nav_prefer_flank_left
 				}
 			}
 		}
@@ -881,6 +888,7 @@ population
 			TFBot
 			{
 				Template	T_TFBot_Heavyweapons_Heavyweight_Champ
+				Tag nav_prefer_flank_left
 				Name "KGB Heavy"
 			}
 		}
@@ -897,6 +905,7 @@ population
 			TFBot
 			{
 				Template	T_TFBot_Soldier_Uncharged
+				Tag nav_prefer_flank_left
 			}
 		}
 		WaveSpawn
@@ -921,6 +930,7 @@ population
 					Classicon	pyro_homewrecker_lite_armored
 					WeaponRestrictions	MeleeOnly
 					Item	"The Homewrecker"
+					Tag nav_prefer_flank_left
 				}
 				TFBot
 				{
@@ -931,6 +941,7 @@ population
 					Classicon	medic_quickfix_armored_spammer
 					Attributes	SpawnWithFullCharge
 					WeaponRestrictions	SecondaryOnly
+					Tag nav_prefer_flank_left
 					ItemAttributes
 					{
 						ItemName	"The Quick-Fix"
@@ -961,6 +972,7 @@ population
 			TFBot
 			{
 				Template	T_TFBot_Giant_Scout_Baseball
+				Tag nav_prefer_flank_left
 			}
 		}
 		WaveSpawn
@@ -984,6 +996,7 @@ population
 				Item		"Bonk Helm"
 				Classicon	scout_bonk_scatter_nys2
 				Attributes	HoldFireUntilFullReload
+				Tag nav_prefer_flank_left
 			}
 		}
 		WaveSpawn
@@ -1004,14 +1017,17 @@ population
 					Template	T_TFBot_Scout_SunStick
 					Name		"Sunstick Scout"
 					Classicon	scout_sunstick_swordstone
+					Tag nav_prefer_flank_left
 				}
 				TFBot
 				{
 					Template	T_TFBot_Pyro_Flaregun
+					Tag nav_prefer_flank_left
 				}
 				TFBot
 				{
 					Template	T_TFBot_Pyro_Flaregun
+					Tag nav_prefer_flank_left
 				}
 			}
 		}
@@ -1034,6 +1050,7 @@ population
 					Item		"The Hardium Helm"
 					Item		"The Space Bracers"
 					Item		"The Jupiter Jumpers"
+					Tag nav_prefer_flank_left
 				}
 				TFBot
 				{
@@ -1045,6 +1062,7 @@ population
 					Item		"Bonk Helm"
 					Classicon	scout_bonk_scatter_nys2
 					Attributes	HoldFireUntilFullReload
+					Tag nav_prefer_flank_left
 				}
 				TFBot
 				{
@@ -1056,6 +1074,7 @@ population
 					Item		"Bonk Helm"
 					Classicon	scout_bonk_scatter_nys2
 					Attributes	HoldFireUntilFullReload
+					Tag nav_prefer_flank_left
 				}
 				TFBot
 				{
@@ -1067,6 +1086,7 @@ population
 					Item		"Bonk Helm"
 					Classicon	scout_bonk_scatter_nys2
 					Attributes	HoldFireUntilFullReload
+					Tag nav_prefer_flank_left
 				}
 			}
 		}
@@ -1118,6 +1138,7 @@ population
 				Item		"Head Hunter"
 				Item		"Claws And Infect"
 				Classicon	scout_bat_nys
+				Tag nav_prefer_flank_right
 			}
 		}
 		WaveSpawn
@@ -1137,6 +1158,7 @@ population
 				Name	"Mangler Soldier"
 				Item	"The Cow Mangler 5000"
 				ClassIcon	soldier_cowmangler
+				Tag nav_prefer_flank_right
 			}
 		}
 		WaveSpawn
@@ -1153,6 +1175,7 @@ population
 			{
 				Template	T_TFBot_Sniper_Huntsman_Spammer
 				ClassIcon	sniper_bow_multi
+				Tag nav_prefer_flank_right
 			}
 		}
 		WaveSpawn
@@ -1173,6 +1196,7 @@ population
 				Item		"The Loch-n-Load"
 				Classicon	demo_loch_nys
 				Attributes	HoldFireUntilFullReload
+				Tag nav_prefer_flank_right
 			}
 		}
 		WaveSpawn
@@ -1193,6 +1217,7 @@ population
 				Item		"The Loch-n-Load"
 				Classicon	demo_loch_nys
 				Attributes	HoldFireUntilFullReload
+				Tag nav_prefer_flank_right
 			}
 		}
 		WaveSpawn
@@ -1212,6 +1237,7 @@ population
 				Name		"Giant Los Pyros Hermanos"
 				Item		"The Miami Rooster"
 				Item		"Trickster's Turnout Gear"
+				Tag nav_prefer_flank_right
 			}
 		}
 		WaveSpawn
@@ -1228,6 +1254,7 @@ population
 			TFBot
 			{
 				Template	T_TFBot_Soldier_RocketShotgun
+				Tag nav_prefer_flank_right
 			}
 		}
 		WaveSpawn
@@ -1251,6 +1278,7 @@ population
 				Item		"The Liquor Locker"
 				Item		"The Mann-Bird of Aberdeen"
 				Item		"Cursed Cruise"
+				Tag nav_prefer_flank_right
 				ItemAttributes
 				{
 					ItemName "The Horseless Headless Horseman's Headtaker"
@@ -1287,7 +1315,7 @@ population
 		WaveSpawn
 		{
 			Name	2f
-		WaitForAllSpawned	2c
+			WaitForAllSpawned	2c
 			TotalCurrency	100
 			TotalCount	8
 			MaxActive	8
@@ -1308,6 +1336,7 @@ population
 					Attributes	HoldFireUntilFullReload
 					Classicon	heavy_shotgun
 					Item		"War Dog"
+					Tag nav_prefer_flank_right
 					ItemAttributes
 					{
 						ItemName "TF_WEAPON_SHOTGUN_SOLDIER"
@@ -1335,6 +1364,7 @@ population
 					Skill	Normal
 					Attributes	AlwaysFireWeapon
 					Item	"harvest_flamethrower_pumpkinpatch"
+					Tag nav_prefer_flank_right
 					CharacterAttributes
 					{
 						"SPELL: Halloween green flames"	1
@@ -1346,6 +1376,7 @@ population
 					Skill	Normal
 					Attributes	AlwaysFireWeapon
 					Item	"harvest_flamethrower_pumpkinpatch"
+					Tag nav_prefer_flank_right
 					CharacterAttributes
 					{
 						"SPELL: Halloween green flames"	1
@@ -1357,6 +1388,7 @@ population
 					Skill	Normal
 					Attributes	AlwaysFireWeapon
 					Item	"harvest_flamethrower_pumpkinpatch"
+					Tag nav_prefer_flank_right
 					CharacterAttributes
 					{
 						"SPELL: Halloween green flames"	1
@@ -1385,6 +1417,7 @@ population
 				Item		"The Liquor Locker"
 				Item		"The Mann-Bird of Aberdeen"
 				Item		"Cursed Cruise"
+				Tag nav_prefer_flank_right
 				ItemAttributes
 				{
 					ItemName "The Horseless Headless Horseman's Headtaker"
@@ -1473,6 +1506,7 @@ population
 				Health				125
 				WeaponRestrictions	SecondaryOnly
 				Classicon			scout_pistol_nys
+				Tag nav_prefer_flank_mid
 			}
 		}
 		WaveSpawn
@@ -1493,14 +1527,16 @@ population
 					Item		"The Freedom Feathers"
 					Item		"Private Maggot Muncher"
 					Item		"The Compatriot"
+					Tag nav_prefer_flank_mid
 				}
 				TFBot
 				{
 					Template	T_TFBot_Medic_BigHeal
-					Name		"Big-Heal Medic"
+					Name		"Popping QF Medic"
 					Attributes	SpawnWithFullCharge
 					Classicon	medic_pop
 					Item		"The Surgeon's Stahlhelm"
+					Tag nav_prefer_flank_mid
 					ItemAttributes
 					{
 						Itemname	"The Quick-Fix"
@@ -1535,6 +1571,7 @@ population
 					WeaponRestrictions	SecondaryOnly
 					Item	TF_WEAPON_SHOTGUN_HWG
 					Classicon	heavy_shotgun
+					Tag nav_prefer_flank_mid
 				}
 				TFBot
 				{
@@ -1544,6 +1581,7 @@ population
 					WeaponRestrictions	SecondaryOnly
 					Item	TF_WEAPON_SHOTGUN_SOLDIER
 					Classicon	heavy_shotgun
+					Tag nav_prefer_flank_mid
 				}
 				TFBot
 				{
@@ -1553,16 +1591,19 @@ population
 					WeaponRestrictions	SecondaryOnly
 					Item	TF_WEAPON_SHOTGUN_PYRO
 					Classicon	heavy_shotgun
+					Tag nav_prefer_flank_mid
 				}
 				TFBot
 				{
 					Class	Demoman
 					Skill	Normal
+					Tag nav_prefer_flank_mid
 				}
 				TFBot
 				{
 					Class	Demoman
 					Skill	Normal
+					Tag nav_prefer_flank_mid
 				}
 			}
 		}
@@ -1584,10 +1625,12 @@ population
 					Template	T_TFBot_Giant_Demoman
 					Item		"Blastphomet"
 					Classicon	demo_rapid_giant
+					Tag nav_prefer_flank_mid
 				}
 				TFBot
 				{
 					Template	T_TFBot_Medic_BigHeal
+					Tag nav_prefer_flank_mid
 				}
 			}
 		}
@@ -1612,6 +1655,7 @@ population
 				WeaponRestrictions	MeleeOnly
 				Item	"The Boston Basher"
 				Classicon	scout_bostonbasher_armored_b
+				Tag nav_prefer_flank_mid
 				ItemAttributes
 				{
 					Itemname	"The Boston Basher"
@@ -1663,6 +1707,7 @@ population
 			TFBot
 			{
 				Template	T_TFBot_Pyro_Flarion_Boss	//	aka Gargoylian Griller
+				Tag nav_prefer_flank_left
 			}
 		}
 		WaveSpawn
@@ -1720,6 +1765,7 @@ population
 				Class	Pyro
 				Skill	Normal
 				Item	"harvest_flamethrower_pumpkinpatch"
+				Tag nav_prefer_flank_left
 				CharacterAttributes
 				{
 					"SPELL: Halloween green flames"	1
@@ -1744,6 +1790,7 @@ population
 			TFBot
 			{
 				Template	T_TFBot_Scout_FAN
+				Tag nav_prefer_flank_left
 			}
 		}
 		WaveSpawn
@@ -1762,6 +1809,7 @@ population
 				TFBot
 				{
 					Template	T_TFBot_Giant_Soldier_Trioriginal
+					Tag nav_prefer_flank_left
 				}
 				TFBot
 				{
@@ -1770,6 +1818,7 @@ population
 					Scale		1.5
 					Health		750
 					Classicon	medic_armoredshield_qf_mort
+					Tag nav_prefer_flank_left
 				}
 			}
 		}
@@ -1787,6 +1836,7 @@ population
 			TFBot
 			{
 				Template	T_TFBot_Pyro_Gas
+				Tag nav_prefer_flank_left
 			}
 		}
 		//`WaveSpawn
@@ -1825,12 +1875,10 @@ population
 				Class	Pyro
 				Skill	Normal
 				Item	"harvest_flamethrower_pumpkinpatch"
+				Tag nav_prefer_flank_left
 				CharacterAttributes
 				{
 					"SPELL: Halloween green flames"	1
-				}
-				CharacterAttributes
-				{
 					"airblast disabled"	1
 				}
 			}
@@ -1855,6 +1903,7 @@ population
 					Classicon	heavy_heater
 					Item		"The Chicken Kiev"
 					Item		"The Red Army Robin"
+					Tag nav_prefer_flank_left
 				}
 				TFBot
 				{
@@ -1863,6 +1912,7 @@ population
 					Scale		1.50
 					Name		"Armored Quick-Fix Medic"
 					ClassIcon	medic_armored_lite
+					Tag nav_prefer_flank_left
 				}
 			}
 		}
@@ -1911,10 +1961,12 @@ population
 				TFBot
 				{
 					Template	T_TFBot_Heavy_PunchLine
+					Tag nav_prefer_flank_right
 				}
 				TFBot
 				{
 					Template	T_TFBot_Giant_Medic_KritzRoll
+					Tag nav_prefer_flank_right
 				}
 			}
 		}
@@ -1937,6 +1989,7 @@ population
 				Item	"Tomislav"
 				Item	"Capone's Capper"
 				Classicon	heavy_accurate_lite
+				Tag nav_prefer_flank_right
 			}
 		}
 		WaveSpawn
@@ -1952,6 +2005,7 @@ population
 			TFBot
 			{
 				Template	T_TFBot_Soldier_Extended_Concheror
+				Tag nav_prefer_flank_right
 			}
 		}
 		//WaveSpawn
@@ -2006,6 +2060,7 @@ population
 			{
 				Class	Soldier
 				Skill	Normal
+				Tag nav_prefer_flank_right
 			}
 		}
 		WaveSpawn
@@ -2022,6 +2077,7 @@ population
 			TFBot
 			{
 				Template	T_TFBot_Soldier_Extended_Concheror
+				Tag nav_prefer_flank_right
 			}
 		}
 		WaveSpawn
@@ -2038,6 +2094,7 @@ population
 			TFBot
 			{
 				Template	T_TFBot_Giant_Soldier_Burstfire_heal	//	Hellhealers
+				Tag nav_prefer_flank_right
 			}
 		}
 		WaveSpawn
@@ -2119,16 +2176,20 @@ population
 				TFBot
 				{
 					Template	T_TFBot_Giant_Pyro
-					Name 		"Dragon Fury Pyro"
+					Name 		"Dragon Fury Conch Pyro"
 					item 		"the dragon's fury"
 					Item		"The Fire Breather"
 					Item		"Smiling Somen"
 					Item		"The Scorched Skirt"
-					classicon 	pyro_dragon_fury_swordstone
+					Item		"The Concheror"
+					classicon 	pyro_dragon_fury_conch_lite
+					Attributes  SpawnWithFullCharge
+					Tag nav_prefer_flank_left
 					CharacterAttributes
 					{
 						"airblast vertical vulnerability multiplier"	0.5
 						"airblast vulnerability multiplier" 0.2
+						"increase buff duration"	9.0
  					}
 				}
 				TFBot
@@ -2139,6 +2200,7 @@ population
 					Item		"The Xeno Suit"
 					Item		"The Biomech Backpack"
 					Attributes	AlwaysCrit
+					Tag nav_prefer_flank_left
 				}
 				TFBot
 				{
@@ -2148,6 +2210,7 @@ population
 					Item		"The Xeno Suit"
 					Item		"The Biomech Backpack"
 					Attributes	AlwaysCrit
+					Tag nav_prefer_flank_left
 				}
 				TFBot
 				{
@@ -2157,6 +2220,7 @@ population
 					Item		"The Xeno Suit"
 					Item		"The Biomech Backpack"
 					Attributes	AlwaysCrit
+					Tag nav_prefer_flank_left
 				}
 			}
 		}
@@ -2182,6 +2246,7 @@ population
 					Classicon 			demo_sticky_daan
 					Item				"Thunder Dome"
 					Item				"The Shrapnel Shell"
+					Tag nav_prefer_flank_left
 					ItemAttributes
 					{
 						ItemName "TF_WEAPON_PIPEBOMBLAUNCHER"
@@ -2205,6 +2270,7 @@ population
 					Template	T_TFBot_Medic_BigHeal
 					Name		"Big-Heal Medic"
 					Item		"The Surgeon's Stahlhelm"
+					Tag nav_prefer_flank_left
 				}
 			}
 		}
@@ -2221,6 +2287,7 @@ population
 			TFBot
 			{
 				Template	T_TFBot_Demoman_Cannon
+				Tag nav_prefer_flank_left
 			}
 		}
 		WaveSpawn
@@ -2241,18 +2308,22 @@ population
 					Template	T_TFBot_Giant_Soldier_Spammer_Reload
 					Item		"The Larval Lid"
 					Item		"Grub Grenades"
+					Tag nav_prefer_flank_left
 				}
 				TFBot
 				{
 					Template	T_TFBot_Medic_QuickUber
+					Tag nav_prefer_flank_left
 				}
 				TFBot
 				{
 					Template	T_TFBot_Medic_QuickUber
+					Tag nav_prefer_flank_left
 				}
 				TFBot
 				{
 					Template	T_TFBot_Medic_QuickUber
+					Tag nav_prefer_flank_left
 				}
 			}
 		}
@@ -2277,6 +2348,7 @@ population
 					Item		"The Purity Fist"
 					Item		"Gone Commando"
 					ClassIcon	heavy_booster2
+					Tag nav_prefer_flank_left
 					ItemAttributes
 					{
 						ItemName "TF_WEAPON_MINIGUN"
@@ -2295,6 +2367,7 @@ population
 					Item	"Archimedes the Undying"
 					Attributes	MiniBoss
 					ClassIcon	medic_giant
+					Tag nav_prefer_flank_left
 					ItemAttributes
 					{
 						ItemName "The Quick-Fix"
@@ -2365,6 +2438,7 @@ population
 			TFBot
 			{
 				Template	T_TFBot_Soldier_Bison_Zapper
+				Tag nav_prefer_flank_left
 			}
 		}
 	}
@@ -2409,6 +2483,7 @@ population
 			TFBot
 			{
 				Template	T_TFBot_Giant_Demo_Lead_Sprinkler
+				Tag nav_prefer_flank_mid
 			}
 		}
 		//WaveSpawn	//	the relay to manually destroy a tank barrier in skeleclipse
@@ -2501,6 +2576,7 @@ population
 				Name	"Airblast Pyro"
 				Item	"Traffic Cone"
 				Item	"harvest_flamethrower_pumpkinpatch"
+				Tag nav_prefer_flank_mid
 				CharacterAttributes
 				{
 					"SPELL: Halloween green flames"	1
@@ -2521,6 +2597,7 @@ population
 			TFBot
 			{
 				Template	T_TFBot_Soldier_trioriginal
+				Tag nav_prefer_flank_mid
 			}
 		}
 		WaveSpawn
@@ -2538,6 +2615,7 @@ population
 			{
 				Class		Heavy
 				Skill		Normal
+				Tag nav_prefer_flank_mid
 			}
 		}
 		WaveSpawn
@@ -2556,6 +2634,7 @@ population
 			{
 				Class		Scout
 				Skill		Normal
+				Tag nav_prefer_flank_mid
 			}
 		}
 		//WaveSpawn
@@ -2627,6 +2706,7 @@ population
 				Item		"The Make Ogre"
 				Item		"Bone-Cut Belt"
 				Item		"The Last Bite"
+				Tag nav_prefer_flank_mid
 			}
 		}
 		WaveSpawn
@@ -2642,6 +2722,7 @@ population
 			TFBot
 			{
 				Template	T_TFBot_Demoman_Nuke
+				Tag nav_prefer_flank_mid
 			}
 		}
 		WaveSpawn

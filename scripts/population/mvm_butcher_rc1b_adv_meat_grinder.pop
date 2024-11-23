@@ -72,6 +72,21 @@ WaveSchedule
 		}
 	}
 
+	PointTemplates    [$SIGSEGV]    //    this piece of code is to remove the powerup from the game if its dropped, hence making it only be used by the designated class
+	{
+		powerup_fix
+		{
+			logic_timer
+			{
+                "targetname"    "powerup_kill"
+                "RefireTime"    "0.1"
+                "OnTimer"        "item_powerup_rune,kill,,0,-1"
+            }
+        }
+    }
+
+    SpawnTemplate powerup_fix    [$SIGSEGV]
+
 	Templates
 	{
 		T_TFBot_Scout_Soda_Popper
@@ -610,7 +625,7 @@ WaveSchedule
 		T_TFBot_Giant_Demo_MineLayer
 		{
 			Class Demoman
-			ClassIcon demo_clusterbomb_giant
+			ClassIcon demo_clusterbomb_blast //demo_clusterbomb_giant
 			Name "Giant Mine Layer Demoman"
 			Health 3300
 			Skill Expert

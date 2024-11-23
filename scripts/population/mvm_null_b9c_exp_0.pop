@@ -34,13 +34,13 @@ WaveSchedule
 	WaveStartCountdown 7
 	BodyPartScaleSpeed 10
 	Advanced	1
-	NoRomevisionCosmetics 1
+	NoRomevisionCosmetics 1 
 	AllowBotExtraSlots 1
 	Robotlimit 50 //hehehehehehehe
 	MaxEntitySpeed 10000
 	TextPrintTime 0 			
 	
-	// CustomNavFile mvm_null_b9c_fixed
+	//CustomNavFile mvm_null_b9a_fixed [$SIGSEGV]
 	
 	
 	
@@ -371,7 +371,7 @@ WaveSchedule
 			NoFixup 1
             logic_auto
             {
-                "OnMapSpawn" "tf_objective_resource,$SetClientProp$m_iszMvMPopfileName,(exp) The Horrors,0,-1"
+                "OnMapSpawn" "tf_objective_resource,$SetClientProp$m_iszMvMPopfileName,(exp) 0,0,-1"
                 "OnMapSpawn" "demobosstargetname,AddOutput,targetname yes,1,-1"
             }
 		}
@@ -556,6 +556,7 @@ WaveSchedule
                 "damagefilter" "filter_red"
                 //"OnDestroyed" "!parent:kill:0:0:-1,0,-1"
                 "OnDamaged" "player,$DisplayTextCenter,$$=test(!caller.m_iHealth>1,'Nuke HP: '..string(max(!caller.m_iHealth, 0)),''),0,-1"
+				"OnDamaged" "!parentRunScriptCodetry{if(caller.GetHealth()<1){self.Kill()}}catch(e){}0-1"
                 //"CollisionGroup" "20"
             } 
             // OnSpawnOutput
@@ -1778,7 +1779,8 @@ WaveSchedule
 	}
 	Wave 
 	{
-		Explanation   
+		CustomMaxWaveNumber 4
+		Explanation [$SIGSEGV] 
 		{
 			Line "{White}Welcome back to robot hell."
 			Line "{Grey}It's nice to see you again."
@@ -1789,43 +1791,35 @@ WaveSchedule
 			Target	wave_start_relay_ironman
 			Action	Trigger
 		}
-		InitWaveOutput
-		{
-			Target wave_start_relay_ironman
-			Action RunScriptCode
-			Param "
-				//EntFire(`bombpath_choose_relay`, `Kill`)
-				//EntFire(`bombpath_choose_random_relay`, `Trigger`)
-				local ent = Entities.FindByClassname(null, `tf_objective_resource`)
-				if (ent)
-				{
-					// NetProps.SetPropString(ent, `m_iszMvMPopfileName`, `(Exp)`)
-					ent.AcceptInput(`$SetClientProp$m_iszMvMPopfileName`, `(Exp)`, null, null)
-				}
-				local resource = Entities.FindByClassname(null, `tf_objective_resource`)
-				resource.AcceptInput(`$SetClientProp$m_nMannVsMachineWaveCount`, `1`, null, null)
-                resource.AcceptInput(`$SetClientProp$m_nMannVsMachineMaxWaveCount`, `4`, null, null)
-			"
-		}
+		//InitWaveOutput
+		//{
+			//Target wave_start_relay_ironman
+			//Action RunScriptCode
+			//Param "
+				//local resource = Entities.FindByClassname(null, `tf_objective_resource`)
+				//NetProps.SetPropInt(resource, `m_nMannVsMachineWaveCount`, 1)
+                //NetProps.SetPropInt(resource, `m_nMannVsMachineMaxWaveCount`, 4)
+			//"
+		//}
 		DoneOutput
 		{
 			Target	wave_finished_relay
 			Action	Trigger
 		}
-		WaveSpawn
-		{
-			FirstSpawnOutPut
-			{
-				 Target    wave_start_relay_ironman
-				Action    RunScriptCode
-				Param "
-                EntFire(`wave_start_relay_ironman`, `Trigger`)
-                local resource = Entities.FindByClassname(null, `tf_objective_resource`)
-                resource.AcceptInput(`$SetClientProp$m_nMannVsMachineWaveCount`, `1`, null, null)
-                resource.AcceptInput(`$SetClientProp$m_nMannVsMachineMaxWaveCount`, `4`, null, null)
-				"
-			}
-		}
+		//WaveSpawn
+		//{
+		//	FirstSpawnOutPut
+		//	{
+		//		 Target    wave_start_relay_ironman
+		//		Action    RunScriptCode
+		//		Param "
+        //        EntFire(`wave_start_relay_ironman`, `Trigger`)
+        //        local resource = Entities.FindByClassname(null, `tf_objective_resource`)
+         //       NetProps.SetPropInt(resource, `m_nMannVsMachineWaveCount`, 1)
+         //       NetProps.SetPropInt(resource, `m_nMannVsMachineMaxWaveCount`, 4)
+		//		"
+		//	}
+		//}
 		WaveSpawn
 		{
 			WaitBeforeStarting	0
@@ -2576,6 +2570,7 @@ WaveSchedule
 	}
 	Wave
 	{
+		CustomMaxWaveNumber 4
 		StartWaveOutput
 		{
 			Target	wave_start_relay_ironman
@@ -2586,17 +2581,14 @@ WaveSchedule
 			Target wave_start_relay
 			Action RunScriptCode
 			Param "
-				//EntFire(`bombpath_choose_relay`, `Kill`)
-				//EntFire(`bombpath_choose_random_relay`, `Trigger`)
 				local ent = Entities.FindByClassname(null, `tf_objective_resource`)
 				if (ent)
 				{
-					// NetProps.SetPropString(ent, `m_iszMvMPopfileName`, `(Exp) The Horrors`)
 					ent.AcceptInput(`$SetClientProp$m_iszMvMPopfileName`, `(Exp) The Horrors`, null, null)
 				}
-				local resource = Entities.FindByClassname(null, `tf_objective_resource`)
-				NetProps.SetPropInt(resource, `m_nMannVsMachineWaveCount`, 2)
-                resource.AcceptInput(`$SetClientProp$m_nMannVsMachineMaxWaveCount`, `4`, null, null)
+				//local resource = Entities.FindByClassname(null, `tf_objective_resource`)
+				//NetProps.SetPropInt(resource, `m_nMannVsMachineWaveCount`, 2)
+                //NetProps.SetPropInt(resource, `m_nMannVsMachineMaxWaveCount`, 4)
 			"
 		}
 		DoneOutput
@@ -2604,20 +2596,20 @@ WaveSchedule
 			Target	wave_finished_relay
 			Action	Trigger
 		}
-		WaveSpawn
-		{
-			FirstSpawnOutPut
-			{
-				 Target    wave_start_relay_ironman
-				Action    RunScriptCode
-				Param "
-                EntFire(`wave_start_relay_ironman`, `Trigger`)
-                local resource = Entities.FindByClassname(null, `tf_objective_resource`)
-                NetProps.SetPropInt(resource, `m_nMannVsMachineWaveCount`, 2)
-                resource.AcceptInput(`$SetClientProp$m_nMannVsMachineMaxWaveCount`, `4`, null, null)
-				"
-			}
-		}
+		//WaveSpawn
+		//{
+		//	FirstSpawnOutPut
+		//	{
+		//		 Target    wave_start_relay_ironman
+		//		Action    RunScriptCode
+		//		Param "
+         //       EntFire(`wave_start_relay_ironman`, `Trigger`)
+         //       local resource = Entities.FindByClassname(null, `tf_objective_resource`)
+        //        NetProps.SetPropInt(resource, `m_nMannVsMachineWaveCount`, 2)
+        //        NetProps.SetPropInt(resource, `m_nMannVsMachineMaxWaveCount`, 4)
+		//		"
+		//	}
+		//}
 		WaveSpawn
 		{
 			FirstSpawnOutput
@@ -2715,7 +2707,7 @@ WaveSchedule
 				Name "ubertank"
 				Skin 2
 				Classicon tank_uber_lite
-				Model "models/bots/boss_bot/boss_tank_ubered.mdl"  
+				Model "models/bots/boss_bot/boss_tank_ubered.mdl" [$SIGSEGV]
 				Speed	75 
 				StartingPathTrackNode	tank_path_b_1
 				OnBombDroppedOutput
@@ -3073,7 +3065,7 @@ WaveSchedule
 					//Item "The Cross-Comm Crash Helmet"
 					Item "Big Steel Jaw of Summer Fun"
 					Item "powerhouse_rocketlauncher_shellshocker"
-					RocketCustomParticle eyeboss_projectile  
+					RocketCustomParticle eyeboss_projectile [$SIGSEGV]
 				
 					AimOffset "0 0 200"
 					
@@ -3155,7 +3147,7 @@ WaveSchedule
 				Name "ubertank"
 				Skin 2
 				Classicon tank_uber_lite
-				Model "models/bots/boss_bot/boss_tank_ubered.mdl"  
+				Model "models/bots/boss_bot/boss_tank_ubered.mdl" [$SIGSEGV]
 				Speed	75 
 				StartingPathTrackNode	tank_path_b_1
 				OnBombDroppedOutput
@@ -3585,8 +3577,8 @@ WaveSchedule
 									"paintkit_proto_def_index" 255
 									"set_item_texture_wear"    0.2
 									//"custom projectile model" "models/props_skangus_event\w_grenade_toxic.mdl"
-									"explosion particle" "greenfist_explosion"
-									"projectile trail particle" "pipebombtrail_green"
+									//"explosion particle" "greenfist_explosion"
+									//"projectile trail particle" "pipebombtrail_green"
 									"damage bonus" 1.5
 									"clip size bonus" 4
 									"projectile spread angle penalty" 2
@@ -3818,6 +3810,7 @@ WaveSchedule
 	}
 	Wave 
 	{
+		CustomMaxWaveNumber 4
 		StartWaveOutput
 		{
 			Target	wave_start_relay_ironman
@@ -3828,21 +3821,13 @@ WaveSchedule
 			Target wave_start_relay
 			Action RunScriptCode
 			Param "
-				//EntFire(`bombpath_choose_relay`, `Kill`)
-				//EntFire(`bombpath_choose_random_relay`, `Trigger`)
 				IncludeScript(`tankextensions_main`, getroottable())
 				IncludeScript(`tankextensions/vactank`, getroottable())
-				local ent = Entities.FindByClassname(null, `tf_objective_resource`)
-				if (ent)
-				{
-					// NetProps.SetPropString(ent, `m_iszMvMPopfileName`, `(Exp) Under The Moonlight`)
-					ent.AcceptInput(`$SetClientProp$m_iszMvMPopfileName`, `(Exp) Under The Moonlight`, null, null)
-				}
-				local resource = Entities.FindByClassname(null, `tf_objective_resource`)
-				NetProps.SetPropInt(resource, `m_nMannVsMachineWaveCount`, 3)
-                resource.AcceptInput(`$SetClientProp$m_nMannVsMachineMaxWaveCount`, `4`, null, null)
+				//local resource = Entities.FindByClassname(null, `tf_objective_resource`)
+				//NetProps.SetPropInt(resource, `m_nMannVsMachineWaveCount`, 3)
+               // NetProps.SetPropInt(resource, `m_nMannVsMachineMaxWaveCount`, 4)
 				TankExt.SetValueOverrides({
-					VACTANK_RESIST_MULT = 0.85
+					VACTANK_RESIST_MULT = 0.15
 				})
 			"
 		}
@@ -3869,11 +3854,16 @@ WaveSchedule
 				Action    RunScriptCode
 				Param "
                 EntFire(`wave_start_relay_ironman`, `Trigger`)
-                local resource = Entities.FindByClassname(null, `tf_objective_resource`)
-                NetProps.SetPropInt(resource, `m_nMannVsMachineWaveCount`, 3)
-                resource.AcceptInput(`$SetClientProp$m_nMannVsMachineMaxWaveCount`, `4`, null, null)
+				local ent = Entities.FindByClassname(null, `tf_objective_resource`)
+				if (ent)
+				{
+					ent.AcceptInput(`$SetClientProp$m_iszMvMPopfileName`, `(Exp) Under The Moonlight`, null, null)
+				}
+                //local resource = Entities.FindByClassname(null, `tf_objective_resource`)
+                //NetProps.SetPropInt(resource, `m_nMannVsMachineWaveCount`, 3)
+               // NetProps.SetPropInt(resource, `m_nMannVsMachineMaxWaveCount`, 4)
 				TankExt.SetValueOverrides({
-					VACTANK_RESIST_MULT = 0.85
+					VACTANK_RESIST_MULT = 0.15
 				})
 				"
 			}
@@ -3991,7 +3981,7 @@ WaveSchedule
 				TFBot
 				{
 					Class Demoman
-					Name "Fallen ì–€ìƒ‹ã„·ìƒã„´ã„´ë‘«ã„·ã„±"
+					Name "Fallen 얀샋ㄷ읃ㄴㄴ둫ㄷㄱ"
 					Health 40000
 					ClassIcon demo_atomic
 
@@ -5110,12 +5100,11 @@ WaveSchedule
 				local ent = Entities.FindByClassname(null, `tf_objective_resource`)
 				if (ent)
 				{
-					// NetProps.SetPropString(ent, `m_iszMvMPopfileName`, `(Exp) 0`)
 					ent.AcceptInput(`$SetClientProp$m_iszMvMPopfileName`, `(Exp) 0`, null, null)
 				}
-				local resource = Entities.FindByClassname(null, `tf_objective_resource`)
-				NetProps.SetPropInt(resource, `m_nMannVsMachineWaveCount`, 3)
-                NetProps.SetPropInt(resource, `m_nMannVsMachineMaxWaveCount`, 3)
+				//local resource = Entities.FindByClassname(null, `tf_objective_resource`)
+				//NetProps.SetPropInt(resource, `m_nMannVsMachineWaveCount`, 4)
+               // NetProps.SetPropInt(resource, `m_nMannVsMachineMaxWaveCount`, 4)
 			"
 			}
 		}
@@ -5290,6 +5279,29 @@ WaveSchedule
 				Param "ClientPrint(null,3,`\x08FFFFFFFFIt will be waiting. `);"
 			}
 			WaitBeforeStarting 20
+		}
+		WaveSpawn
+		{
+			WaitForAllDead Finale
+			WaitBeforeStarting 26
+			TotalCurrency	0
+			TotalCount	1
+			MaxActive	1
+			SpawnCount	1
+			Where	boss
+			Support Limited
+			TFBot
+			{
+				Class Scout
+				Name "an arbiter comes forth in"
+				ClassIcon pyro_dragon_fury_swordstone_giant
+				Health 1
+				Scale 0.1
+				CharacterAttributes
+				{
+					"health regen" -100
+				}
+			}
 		}
 		WaveSpawn
 		{

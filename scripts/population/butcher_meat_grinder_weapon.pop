@@ -15,6 +15,18 @@ WaveSchedule
 			//"blast dmg to self increased" 1.25
 			//"Blast radius decreased" 0.7
 		}
+		"The Chasethrower"
+		{
+			OriginalItemName "Upgradeable TF_WEAPON_FLAMETHROWER"
+			"add attributes on kill" "CARD: move speed bonus|1.2|4|CARD: damage bonus|1.2|4"
+			"dmg penalty vs players" 0.925
+			"maxammo primary reduced" 0.75
+			"special item description" "[INFO] Defeat any robot will gain a 20% move speed and damage in 4 seconds."
+			//"special item description 2" "[INFO] เมื่อฆ่าหุ่นยนต์ได้: ความเร็วในการวิ่งและความเสียหายจะเพิ่ม 20% ภายใน 4 วินาที"
+			"airblast cost increased" 1.25
+			"paintkit_proto_def_index" 226
+			"set_item_texture_wear" 0
+		}
 		"The Trainee Boots (Secondary)"
 		{
 			OriginalItemName "The Gunboats"
@@ -39,6 +51,31 @@ WaveSchedule
 			"paintkit_proto_def_index" 242
 			"set_item_texture_wear" 0
 		}
+		"The Mini-Kritzkrieg"
+		{
+			OriginalItemName "The Kritzkrieg"
+			"heal rate bonus" 1.25
+			"ubercharge rate bonus" 5
+			"effect cond override" 16
+		}
+		"The Strength Medigun"
+		{
+			OriginalItemName "Upgradeable TF_WEAPON_MEDIGUN"
+			"paintkit_proto_def_index" 414
+			"set_item_texture_wear"	0
+			"heal rate bonus" 1.1
+			"ubercharge rate bonus" 3
+			"effect cond override" 90
+		}
+		"The Agility Medigun"
+		{
+			OriginalItemName "Upgradeable TF_WEAPON_MEDIGUN"
+			"paintkit_proto_def_index" 257
+			"heal rate bonus" 1.4
+			"set_item_texture_wear"	0
+			"ubercharge rate bonus" 5
+			"effect cond override" 97
+		}
 	}
 	
 	ExtraLoadoutItems
@@ -48,6 +85,13 @@ WaveSchedule
 			Primary
 			{
 				Item "The Hellrazer Launcher"
+			}
+		}
+		Pyro
+		{
+			Primary
+			{
+				Item "The Chasethrower"
 			}
 		}
 		Demoman
@@ -62,6 +106,53 @@ WaveSchedule
 			Primary
 			{
 				Item "The Vampire"
+			}
+		}
+		Medic
+		{
+			Secondary
+			{
+				Item "The Mini-Kritzkrieg"
+			}
+			Secondary
+			{
+				Item "The Strength Medigun"
+			}
+			Secondary
+			{
+				Item "The Agility Medigun"
+			}
+		}
+	}
+
+	ExtendedUpgrades
+	{
+		UberchargeRate
+		{
+			Name "+25% Ubercharge Rate"
+			Attribute "ubercharge rate bonus"
+			Increment 0.25
+			Cap 6
+			Cost 300
+			AllowedWeapons
+			{
+				ItemName "The Mini-Kritzkrieg"
+				ItemName "The Agility Medigun"
+			}
+		}
+	}
+	ExtendedUpgrades
+	{
+		UberchargeRate
+		{
+			Name "+25% Ubercharge Rate"
+			Attribute "ubercharge rate bonus"
+			Increment 0.25
+			Cap 4
+			Cost 300
+			AllowedWeapons
+			{
+				ItemName "The Strength Medigun"
 			}
 		}
 	}

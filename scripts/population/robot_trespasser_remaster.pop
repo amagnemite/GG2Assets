@@ -5307,6 +5307,14 @@ WaveSchedule
 			}
 			FireInput 
 			{
+				Target bignet
+				Action RunScriptCode
+				Param "Trespasser.BotDisplace(activator)"
+				Delay -1
+				Repeats 1
+			}
+			FireInput 
+			{
 				Delay 22
 				Cooldown 20
 				Target player
@@ -5366,7 +5374,7 @@ WaveSchedule
 				//"mult stun resistance" 0
 				"override footstep sound set" 0
 				"airblast vulnerability multiplier" 0.25
-				"displace touched enemies" 1
+				// "displace touched enemies" 1
 				"mult step height" 3.4
 				"gesture speed increase" 2
 				"dmg from melee increased" 1.5
@@ -5436,6 +5444,14 @@ WaveSchedule
 			}
 			FireInput 
 			{
+				Target bignet
+				Action RunScriptCode
+				Param "Trespasser.BotDisplace(activator)"
+				Delay -1
+				Repeats 1
+			}
+			FireInput 
+			{
 				Delay 22
 				Cooldown 20
 				Target player
@@ -5487,7 +5503,7 @@ WaveSchedule
 				//"mult stun resistance" 0
 				"override footstep sound set" 0
 				"airblast vulnerability multiplier" 0.25
-				"displace touched enemies" 1
+				// "displace touched enemies" 1
 				"mult step height" 3.4
 				"gesture speed increase" 2
 				"dmg from melee increased" 1.5

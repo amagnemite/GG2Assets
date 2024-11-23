@@ -20,6 +20,7 @@ population
 	SpellDropRateCommon 0
 	SpellDropRateGiant 1
 	NoSkeletonSplit 1
+ 	FastNPCUpdate 1
 	
 	SpellBookNormalRoll   // Override spell roll. The value specifies how many spell charges to give. You can duplicate spells to increase their roll chance
 	{

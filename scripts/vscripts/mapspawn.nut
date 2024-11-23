@@ -163,8 +163,8 @@ EntFireByHandle(::__potato.hWorldspawn, "RunScriptCode",
 
 // These scripts are in the game-servers repo, not ArchiveAssets.
 // They should probably become more integrated with this script eventually.
-IncludeScript("stringtofile.nut")
-IncludeScript("contracts.nut")
+try IncludeScript("stringtofile.nut") catch (_) {}
+try IncludeScript("contracts.nut") catch (_) {}
 // The modules here can be found in the "vscripts/potato" folder.
 // They are not dependent on each other.
 

@@ -4,7 +4,6 @@
 IncludeScript("popextensions_main.nut", getroottable())
 MissionAttrs
 ({
-	WaveStartCountdown = 5
 	ForceHoliday = 2
 	NoRome = 1
 	NoThrillerTaunt = 1

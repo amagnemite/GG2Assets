@@ -31,6 +31,7 @@ PrecacheModel	"models/bots/boss_bot/combat_tank/combat_tank_minigun.mdl"
 PrecacheModel	"models/bots/boss_bot/combat_tank/combat_tank_rocketpod.mdl"
 PrecacheModel	"models/bots/boss_bot/combat_tank/combat_tank_rocket.mdl"
 PrecacheModel 	"models/bots/sniper_boss/bot_sniper_boss.mdl"
+PrecacheModel	"models/props_gameplay/cap_circle_320.mdl"
 
 Templates
 {

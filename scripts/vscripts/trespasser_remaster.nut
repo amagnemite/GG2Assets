@@ -243,9 +243,9 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 				CleanupPlayer(hPlayer)
 				if(hPlayer.IsFakeClient()) continue
 
-				if(hPlayer.GetTeam() == 3)
+				if(hPlayer.GetTeam() == TF_TEAM_BLUE)
 				{
-					hPlayer.ForceChangeTeam(2, true)
+					hPlayer.ForceChangeTeam(TF_TEAM_RED, true)
 					hPlayer.ForceRespawn()
 				}
 
@@ -309,7 +309,7 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 		for(local i = 1; i <= MAX_PLAYERS; i++)
 		{
 			local hPlayer = PlayerInstanceFromIndex(i)
-			if(!hPlayer || hPlayer.IsFakeClient() || hPlayer.GetTeam() <= 1) continue
+			if(!hPlayer || hPlayer.IsFakeClient() || hPlayer.GetTeam() <= TEAM_SPECTATOR) continue
 			local sNetworkID = GetPropString(hPlayer, "m_szNetworkIDString")
 
 			if(sNetworkID in Wins)
@@ -318,14 +318,14 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 				Wins[sNetworkID] <- [1, false, false]
 
 			local sPlayerName = GetPropString(hPlayer, "m_szNetname")
-		
+
 			local bSoloUnlock = false
 			if(bSoloMode && !Wins[sNetworkID][1])
 			{
 				bSoloUnlock = true
 				Wins[sNetworkID][1] = true
 			}
-	
+
 			local bAllSurvivorsAliveUnlock = false
 			if(bAllSurvivorsAlive && !Wins[sNetworkID][2])
 			{
@@ -785,7 +785,7 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 		SetPropInt(hTemp, "m_AttributeManager.m_Item.m_iItemDefinitionIndex", 1101)
 		SetPropBool(hTemp, "m_AttributeManager.m_Item.m_bInitialized", true)
 		hTemp.SetTeam(hPlayer.GetTeam())
-		hTemp.DispatchSpawn() 
+		hTemp.DispatchSpawn()
 		hPlayer.Weapon_Equip(hTemp)
 		local hCosmetic = GetPropEntity(hTemp, "m_hExtraWearable")
 		hTemp.Kill()
@@ -890,13 +890,13 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 		hBook_scope.Think <- function()
 		{
 			local flTime = Time()
-			
+
 			if(flRechargeTime == 0 && hSpellbook && hSpellbook.IsValid() && GetPropBool(hSpellbook, "m_bFiredAttack") == true)
 			{
 				flRechargeTime = flTime + 12
 				EntFireByHandle(hSpellbook, "Kill", null, 0.75, null, null)
 			}
-			
+
 			if(flRechargeTime > 0 && flRechargeTimeDuration == 0)
 			{
 				flRechargeTimeDuration = flRechargeTime - flTime
@@ -1140,7 +1140,7 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 			params.damage = 0
 
 			// Gives gray bots crit damage against blue bots
-			if(iVictimTeam == 3 && iAttackerTeam == 1)
+			if(iVictimTeam == TF_TEAM_BLUE && iAttackerTeam == TEAM_SPECTATOR)
 				params.damage_type = params.damage_type | DMG_ACID
 
 
@@ -1225,6 +1225,9 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 			// make crits deal their normal 3x damage against monoculus
 			if(sVictimClassname == "eyeball_boss" && params.damage_type & DMG_ACID) params.damage *= 1.5
 
+			// i dont think a lot of people know that mono instantly kills whoever is occupying where he spawns from
+			if(sAttackerClassname == "eyeball_boss" && params.damage_custom & TF_DMG_CUSTOM_PLASMA) params.damage *= 0
+
 			if(hVictim.IsPlayer() && hVictim.IsBotOfType(TF_BOT_TYPE))
 			{
 				if(hVictim.HasBotTag("metal_hit"))
@@ -1239,7 +1242,7 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 
 			if(sAttackerClassname == "headless_hatman")
 			{
-				if(iVictimTeam == 3)
+				if(iVictimTeam == TF_TEAM_BLUE)
 					params.damage *= 2
 				if(hAttacker == hInflictor && GetPropInt(hGameRules, "m_halloweenScenario") == 5)
 				{
@@ -1318,7 +1321,7 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 				{ hChainsaw = hWeapon; break }
 		}
 		if(!hChainsaw) return
-		
+
 		local hViewmodel = GetPropEntity(hPlayer, "m_hViewModel")
 
 		hChainsaw.ValidateScriptScope()
@@ -1401,7 +1404,7 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 		{
 			local iTeamNum = hPlayer.GetTeam()
 			local sSound = "Wood.Loud"
-			if(Trace.enthit.IsPlayer()) 
+			if(Trace.enthit.IsPlayer())
 			{
 				if(Trace.enthit.GetTeam() == iTeamNum) return
 				sSound = "Chainsaw.Hit"
@@ -1516,18 +1519,18 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 		{
 			hAnnotationFollow = SpawnEntityFromTable("prop_dynamic", { model = "models/props_hydro/barrel_crate_half.mdl", origin = "400 0 60", disableshadows = 1 })
 			hAnnotationFollow.DisableDraw()
+			hAnnotationFollow.AddEFlags(EFL_IN_SKYBOX | EFL_FORCE_CHECK_TRANSMIT)
 			SetPropEntity(hAnnotationFollow, "m_hMovePeer", hEnt.FirstMoveChild())
 			SetPropEntity(hEnt, "m_hMoveChild", hAnnotationFollow)
 			SetPropEntity(hAnnotationFollow, "m_hMoveParent", hEnt)
-			SpawnEntityFromTable("info_target", { spawnflags = 0x01 }).AcceptInput("SetParent", "!activator", hAnnotationFollow, null)
 			EntFireByHandle(hAnnotationFollow, "Kill", null, flDelay + flDuration + 0.2, null, null)
 			SetPropBool(hAnnotationFollow, "m_bForcePurgeFixedupStrings", true)
 		}
 
+		hEnt.AddEFlags(EFL_IN_SKYBOX | EFL_FORCE_CHECK_TRANSMIT)
+		DoEntFire("bignet", "RunScriptCode", "activator.RemoveEFlags(EFL_IN_SKYBOX | EFL_FORCE_CHECK_TRANSMIT)", flDelay + flDuration + 0.2, hEnt, null)
 		DoEntFire("bignet", "RunScriptCode" format(@"
 			local index = activator.entindex()
-			local hTarget = SpawnEntityFromTable(`info_target`, { spawnflags = 0x01 })
-			hTarget.AcceptInput(`SetParent`, `!activator`, activator, null)
 			local anno = function(entindex1, entindex2){
 				SendGlobalGameEvent(`show_annotation`,
 				{
@@ -1540,9 +1543,8 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 					show_effect = false
 					lifetime = %f
 				})}
-			EntFireByHandle(hTarget, `Kill`, null, %f, null, null)
 			%s
-			%s", sText, flDuration, flDuration, bVisibleToOthers ? "anno(activator.entindex(), ((1 << 31) - 1) & ~(1 << (index > 30 ? 0 : index)))" : "", bRealClient ? "anno(caller.entindex(), 1 << (index > 30 ? 30 : index))" : ""
+			%s", sText, flDuration, bVisibleToOthers ? "anno(activator.entindex(), ((1 << 31) - 1) & ~(1 << (index > 30 ? 0 : index)))" : "", bRealClient ? "anno(caller.entindex(), 1 << (index > 30 ? 30 : index))" : ""
 		), flDelay, hEnt, hAnnotationFollow)
 	}
 
@@ -1564,7 +1566,7 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 		for(local i = 1; i <= MAX_CLIENTS; i++)
 		{
 			local hPlayer = PlayerInstanceFromIndex(i)
-			if(hPlayer && hPlayer.GetTeam() == 2 && hPlayer.IsAlive() && !hPlayer.InCond(TF_COND_HALLOWEEN_GHOST_MODE) && !(hPlayer.IsBotOfType(TF_BOT_TYPE) && hPlayer.HasBotTag("bot_ignoreredcount")))
+			if(hPlayer && hPlayer.GetTeam() == TF_TEAM_RED && hPlayer.IsAlive() && !hPlayer.InCond(TF_COND_HALLOWEEN_GHOST_MODE) && !(hPlayer.IsBotOfType(TF_BOT_TYPE) && hPlayer.HasBotTag("bot_ignoreredcount")))
 			{
 				if(hPlayer.IsBotOfType(TF_BOT_TYPE))
 					iAliveRedBots++
@@ -1667,9 +1669,11 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 	// player joining
 	function OnGameEvent_player_activate(params)
 	{
+		local hPlayer = GetPlayerFromUserID(params.userid)
+		if(hPlayer.IsFakeClient()) return
+
 		GetPlayerWins()
 
-		local hPlayer = GetPlayerFromUserID(params.userid)
 		if(bMusic)
 			EmitSoundEx({
 				sound_name  = "#trespasser_v2/music_spawnroom.wav"
@@ -1704,7 +1708,7 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 				DispatchParticleEffect("env_sawblood", vecOrigin, Vector(1))
 				DispatchParticleEffect("env_sawblood", hPlayer.GetCenter(), Vector(1))
 				DispatchParticleEffect("env_sawblood", hPlayer.EyePosition(), Vector(1))
-				local hSkeleton = SpawnEntityFromTable("tf_zombie", { origin = vecOrigin, angles = hPlayer.GetAbsAngles(), teamnum = 2 })
+				local hSkeleton = SpawnEntityFromTable("tf_zombie", { origin = vecOrigin, angles = hPlayer.GetAbsAngles(), teamnum = TF_TEAM_RED })
 				hSkeleton.SetSkin(4)
 				hSkeleton.SetMaxHealth(1500)
 				hSkeleton.SetHealth(1500)
@@ -1852,14 +1856,14 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 			spawnflags = 1
 		})
 		hTouch.SetSolid(SOLID_BBOX)
-		hTouch.SetSize(Vector(-96, -96, -96), Vector(96, 96, 96))
-		
+		hTouch.SetSize(Vector(-128, -128, -128), Vector(128, 128, 128))
+
 		local hDisp = SpawnEntityFromTable("pd_dispenser", {
 			origin         = Vector(0, 0, 32)
 			defaultupgrade = 0
-			teamnum        = 2
+			teamnum        = TF_TEAM_RED
 			touch_trigger  = "ghosttrigger"
-			"$ratemult"    : 0.4
+			"$ratemult"    : 0.6
 		})
 
 		hDisp.ValidateScriptScope()
@@ -1882,7 +1886,7 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 				flBooTime = Time() + 1
 				hPlayer.EmitSound("Halloween.GhostBoo")
 			}
-			
+
 			EmitSoundEx({
 				sound_name = "misc/null.wav"
 				flags      = SND_CHANGE_PITCH | SND_IGNORE_NAME
@@ -1895,7 +1899,7 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 			for(local hCamera; hCamera = FindByClassname(hCamera, "point_viewcontrol");)
 				if(GetPropInt(hCamera, "m_state") == 1)
 					{ bCameraNow = true; break}
-			
+
 			if(bCameraNow && !bCamera) // ghosts dont like cameras
 			{
 				bCamera = true
@@ -1945,7 +1949,7 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 				volume      = 0.75
 			})
 			if(!bInWave || flTimeCountdown > 0)
-				EntFire("bignet", "RunScriptCode", "if(activator && !activator.IsAlive() && activator.GetTeam() == 2) activator.ForceRespawn()", 3, hVictim)
+				EntFire("bignet", "RunScriptCode", "if(activator && !activator.IsAlive() && activator.GetTeam() == TF_TEAM_RED) activator.ForceRespawn()", 3, hVictim)
 			else
 			{
 				local vecOrigin = hVictim.GetOrigin()
@@ -1953,7 +1957,7 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 				EntFire("bignet", "RunScriptCode", format("Trespasser.BecomeGhost(activator, Vector(%f, %f, %f), QAngle(%f, %f, 0))", vecOrigin.x, vecOrigin.y, vecOrigin.z, angEyes.x, angEyes.y), 6, hVictim)
 			}
 		}
-		if(hVictim && hVictim.GetTeam() == 2)
+		if(hVictim && hVictim.GetTeam() == TF_TEAM_RED)
 			EntFire("bignet", "RunScriptCode", "Trespasser.AliveCountCheck()", -1)
 		if(bBot)
 		{
@@ -1990,7 +1994,7 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 	function OnGameEvent_player_hurt(params)
 	{
 		local hPlayer = GetPlayerFromUserID(params.userid)
-		if(hPlayer.GetTeam() == 2)
+		if(hPlayer.GetTeam() == TF_TEAM_RED)
 		{
 			local flTime = Time()
 			local iHealth = hPlayer.GetHealth()
@@ -2127,7 +2131,7 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 			EmitSoundEx(SoundTable)
 			EmitSoundEx(SoundTable)
 			hPlayer.AcceptInput("$ResetInventory", null, null, null)
-			EntFire("bignet", "RunScriptCode", "activator.SetScriptOverlayMaterial(`effects/tp_eyefx/tp_eyefx_eli`); activator.SetHudHideFlags(-1); activator.ForceChangeTeam(2, true)", -1, hPlayer)
+			EntFire("bignet", "RunScriptCode", "activator.SetScriptOverlayMaterial(`effects/tp_eyefx/tp_eyefx_eli`); activator.SetHudHideFlags(-1); activator.ForceChangeTeam(TF_TEAM_RED, true)", -1, hPlayer)
 			EntFire("bignet", "RunScriptCode", "activator.SetScriptOverlayMaterial(null); activator.SetHudHideFlags(0)", 3, hPlayer)
 		}
 	}
@@ -2186,7 +2190,7 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 		for(local i = 1; i <= MAX_CLIENTS; i++)
 		{
 			local hPlayer = PlayerInstanceFromIndex(i)
-			if(hPlayer && !hPlayer.IsFakeClient() && (!hPlayer.IsAlive() || hPlayer.InCond(TF_COND_HALLOWEEN_GHOST_MODE)) && hPlayer.GetTeam() == 2)
+			if(hPlayer && !hPlayer.IsFakeClient() && (!hPlayer.IsAlive() || hPlayer.InCond(TF_COND_HALLOWEEN_GHOST_MODE)) && hPlayer.GetTeam() == TF_TEAM_RED)
 				hPlayer.ForceRespawn()
 		}
 	}
@@ -2278,7 +2282,7 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 	function GetRandomPlayerShuffle(iTeamNums = null, bAlive = null, bBot = null)
 	{
 		local Players = GetAllPlayersOfType(iTeamNums, bAlive, bBot)
-		
+
 		local Delete = []
 		foreach(hPlayer in SelectedFromShuffle)
 		{
@@ -2286,14 +2290,14 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 			if(Index != null)
 				Players.remove(Index)
 		}
-		
+
 		local ArrayLength = Players.len()
 		if(ArrayLength > 0)
 		{
 			local hSelectedPlayer = Players[RandomInt(0, ArrayLength - 1)]
 			SelectedFromShuffle.append(hSelectedPlayer)
 			return hSelectedPlayer
-		} 
+		}
 		else if(SelectedFromShuffle.len() == 0) return null
 		else
 		{
@@ -2462,7 +2466,7 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 				SetPropInt(hWearable, "m_AttributeManager.m_Item.m_iItemDefinitionIndex", iItemIndexReal)
 				SetPropBool(hWearable, "m_AttributeManager.m_Item.m_bInitialized", true)
 				hWearable.DispatchSpawn()
-				
+
 				SetPropBool(hWearable, "m_bForcePurgeFixedupStrings", true)
 				hWearable.ValidateScriptScope()
 				hWearable.GetScriptScope().Think <- function()
@@ -2506,7 +2510,7 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 			"tf_weapon_rocketpack"
 			265
 		]
-		
+
 		local iUserID = GetPropIntArray(hPlayerManager, "m_iUserID", hBot.entindex())
 		for(local hChild = hPlayer.FirstMoveChild(); hChild; hChild = hChild.NextMovePeer())
 			if(HasProp(hChild, "m_AttributeManager"))
@@ -2560,7 +2564,7 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 			if(Attr != 1337)
 				hBot.AddCustomAttribute(sAttr, Attr, -1)
 		}
-		
+
 		local ZombieCosmetics = [
 			5617
 			5617
@@ -2605,7 +2609,7 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 					local iBit = 1 << i
 					if(iPlayerCond & iBit && i != 7) hBot.AddCondEx(i, 0.03, null)
 					if(iPlayerCondEx & iBit) hBot.AddCondEx(i + 32, 0.03, null)
-					if(iPlayerCondEx2 & iBit && i != 12) hBot.AddCondEx(i + 64, 0.03, null)
+					if(iPlayerCondEx2 & iBit && i != 13) hBot.AddCondEx(i + 64, 0.03, null)
 					if(iPlayerCondEx3 & iBit) hBot.AddCondEx(i + 96, 0.03, null)
 					if(iPlayerCondEx4 & iBit) hBot.AddCondEx(i + 128, 0.03, null)
 				}
@@ -2783,7 +2787,7 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 		{
 			if(hIndicator && hIndicator.IsValid())
 				hIndicator.Kill()
-				
+
 			// if(hPlatform && hPlatform.IsValid())
 			// {
 			// 	local vecOrigin = hPlatform.GetOrigin()
@@ -2851,7 +2855,7 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 				// 		local vecAbove = vecOrigin
 				// 		vecAbove.z = iDestZ
 				// 		hPlayer.SetAbsOrigin(vecAbove)
-	
+
 				// 		local vecPlatform = vecAbove + vecForward * 80 + vecRight * 32 + Vector(0, 0, -9)
 				// 		hPlatform = SpawnEntityFromTable("prop_dynamic", {
 				// 			origin         = vecPlatform
@@ -2870,12 +2874,12 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 				// 			disableshadows = 1
 				// 			modelscale     = 1.95
 				// 		})
-	
+
 				// 		PrecacheSound("physics/metal/metal_grate_impact_hard2.wav")
 				// 		EmitSoundEx({ sound_name = "physics/metal/metal_grate_impact_hard2.wav", sound_level = 90, entity = hPlatform, filter_type = RECIPIENT_FILTER_GLOBAL })
 				// 		Trespasser.ShakeIt()
 				// 		DispatchParticleEffect("merasmus_object_spawn", vecAbove + vecForward * 80 + Vector(0, 0, -6), Vector(1))
-	
+
 				// 		for(local hPlayer; hPlayer = FindByClassnameWithin(hPlayer, "player", vecAbove, 512);)
 				// 		{
 				// 			if(!hPlayer.IsAlive()) continue
@@ -2887,12 +2891,12 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 				// 		}
 				// 	}
 				// }
-				
+
 				local bOnIndicator = false
 				for(local hPlayer; hPlayer = FindByClassnameWithin(hPlayer, "player", vecDestination, 4);)
 					if(hPlayer.IsAlive())
 						{ bOnIndicator = true; break }
-				
+
 				hIndicator.SetSkin(bOnIndicator ? 3 : 1)
 				hIndicator.SetOrigin(vecDestination + Vector(0, 0, 6))
 			}
@@ -3096,6 +3100,37 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 		}
 	}
 
+	function OnGameEvent_pumpkin_lord_summoned(_)
+	{
+		local hHHH = FindByClassname(null, "headless_hatman")
+		if(hHHH) BossGlow(hHHH)
+	}
+
+	function OnGameEvent_eyeball_boss_summoned(_)
+	{
+		local hMonoculus = FindByClassname(null, "eyeball_boss")
+		if(hMonoculus)
+		{
+			BossGlow(hMonoculus)
+			for(local hPlayer; hPlayer = FindByClassnameWithin(hPlayer, "player", hMonoculus.GetCenter(), 512);)
+				if(!UnstuckEntity(hPlayer))
+					hPlayer.SetAbsOrigin(Vector(0, 920, 128))
+		}
+	}
+
+	function BossGlow(hBoss)
+	{
+		local hGlow = SpawnEntityFromTable("tf_glow", {
+			GlowColor = "200 75 255 220"
+			target    = "bignet"
+		})
+		SetPropEntity(hGlow, "m_hTarget", hBoss)
+		SetPropEntity(hGlow, "m_hMovePeer", hBoss.FirstMoveChild())
+		SetPropEntity(hBoss, "m_hMoveChild", hGlow)
+		SetPropEntity(hGlow, "m_hMoveParent", hBoss)
+		hBoss.AddEFlags(EFL_IN_SKYBOX | EFL_FORCE_CHECK_TRANSMIT)
+	}
+
 	function GiveTempWeapon()
 	{
 		local hPlayer = self
@@ -3107,6 +3142,104 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 				{ hPrimary = hWeapon; break }
 		}
 		if(!hPrimary) hPlayer.AcceptInput("$GiveItem", "deflector", null, null)
+	}
+
+	function SummonCoffin(hTarget, hPlayer)
+	{
+		EmitSoundEx({
+			sound_name  = "misc/null.wav"
+			entity      = hPlayer
+			filter_type = RECIPIENT_FILTER_GLOBAL
+			flags       = SND_STOP | SND_IGNORE_NAME
+		})
+
+		for(local hRagdoll; hRagdoll = FindByClassname(hRagdoll, "tf_ragdoll");)
+			if(GetPropEntity(hRagdoll, "m_hPlayer") == hPlayer)
+				{ hRagdoll.Kill(); break }
+
+		local vecOrigin   = hPlayer.GetOrigin()
+		local angRotation = hPlayer.GetAbsAngles()
+		local hDeathProp = SpawnEntityFromTable("prop_dynamic", {
+			origin           = vecOrigin + angRotation.Forward() * 20
+			angles           = angRotation + QAngle(-15, 0, 0)
+			model            = "models/player/soldier.mdl"
+			defaultanim      = "primary_death_headshot"
+			OnAnimationBegun = "!self,Kill,,1.5,-1"
+			renderamt        = 0
+			rendermode       = 1
+		})
+
+		SetPropInt(hDeathProp, "m_nBody", GetPropInt(hPlayer, "m_nBody"))
+		hDeathProp.SetPlaybackRate(0.8)
+
+		SpawnEntityFromTable("prop_dynamic_ornament", {
+			origin = vecOrigin
+			model  = hPlayer.GetModelName()
+		}).AcceptInput("SetAttached", "!activator", hDeathProp, null)
+		for(local hChild = hPlayer.FirstMoveChild(); hChild; hChild = hChild.NextMovePeer())
+			if(hChild.GetClassname() == "tf_wearable")
+				SpawnEntityFromTable("prop_dynamic_ornament", {
+					origin = vecOrigin
+					model  = hChild.GetModelName()
+				}).AcceptInput("SetAttached", "!activator", hDeathProp, null)
+
+		local hCoffin = SpawnEntityFromTable("prop_dynamic", {
+			origin = vecOrigin
+			angles = angRotation
+			model  = "models/workshop/player/items/spy/taunt_the_crypt_creeper/taunt_the_crypt_creeper.mdl"
+		})
+		hDeathProp.AcceptInput("SetParent", "!activator", hCoffin, null)
+		hTarget.AcceptInput("SetParent", "!activator", hCoffin, null)
+		hTarget.SetLocalOrigin(Vector(0, 0, 8))
+		hCoffin.SetMoveType(MOVETYPE_FLYGRAVITY, MOVECOLLIDE_FLY_BOUNCE)
+		hCoffin.AcceptInput("SetAnimation", "taunt_the_crypt_creeper_intro", null, null)
+		EntFireByHandle(hCoffin, "SetPlaybackRate", "0", 3, null, null)
+		EntFireByHandle(hCoffin, "Skin", "1", 3, null, null)
+		EntFireByHandle(hCoffin, "SetAnimation", "taunt_the_crypt_creeper_A1", 6, null, null)
+		EntFireByHandle(hCoffin, "SetAnimation", "taunt_the_crypt_creeper_outro", 7.9, null, null)
+		EntFireByHandle(hCoffin, "Kill", null, 9.75, null, null)
+
+		// sounds Wood_Furniture.Break
+		EntFireByHandle(hCoffin, "$PlaySound", "Wood_Furniture.Break", -1, null, null)
+		EntFireByHandle(hCoffin, "$PlaySound", "Wood.ImpactHard", 1, null, null)
+		EntFireByHandle(hCoffin, "$PlaySound", "Wood.ImpactHard", 1.5, null, null)
+		EntFireByHandle(hCoffin, "$PlaySound", "Wood.ImpactHard", 1.8, null, null)
+		EntFireByHandle(hCoffin, "$PlaySound", "Wood.ImpactHard", 6, null, null)
+		EntFireByHandle(hCoffin, "$PlaySound", "Wood.ImpactHard", 6.8, null, null)
+		EntFireByHandle(hCoffin, "$PlaySound", "Wood_Furniture.Break", 7.8, null, null)
+	}
+
+	function BotDisplace(hPlayer)
+	{
+		local hTouch = SpawnEntityFromTable("trigger_multiple", {
+			spawnflags   = 1
+			OnStartTouch = "!self,RunScriptCode,Trigger(),-1,-1"
+		})
+		hTouch.SetSolid(SOLID_BBOX)
+		hTouch.ValidateScriptScope()
+		local hTouch_scope = hTouch.GetScriptScope()
+		hTouch_scope.flTimeNext <- 0
+		hTouch_scope.Think <- function()
+		{
+			self.SetAbsOrigin(hPlayer.GetOrigin())
+			self.SetSize(hPlayer.GetPlayerMins() * 1.05, hPlayer.GetPlayerMaxs() * 1.05)
+			local flTime = Time()
+			self.AcceptInput("Disable", null, null, null)
+			EntFireByHandle(self, "Enable", null, -1, null, null)
+			if(!hPlayer || !hPlayer.IsValid() || !hPlayer.IsAlive()) self.Kill()
+			return -1
+		}
+		hTouch_scope.Trigger <- function()
+		{
+			local hActivator = activator
+			if(hActivator.GetTeam() != hPlayer.GetTeam())
+			{
+				local vecDir = hActivator.GetOrigin() - hPlayer.GetOrigin()
+				vecDir.Norm()
+				hActivator.ApplyAbsVelocityImpulse(vecDir * 300)
+			}
+		}
+		AddThinkToEnt(hTouch, "Think")
 	}
 
 	// a think ent for per tick checks
@@ -3142,7 +3275,7 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 			local bFakeClient = hPlayer.IsFakeClient()
 			local bAlive = hPlayer.IsAlive()
 
-			if(iTeamNum == 2) // reds
+			if(iTeamNum == TF_TEAM_RED) // reds
 			{
 				if(bAlive) // alive
 				{
@@ -3207,7 +3340,10 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 				else // dead
 				{
 					if(bSoloMode && hPlayer != hLastRed)
+					{
+						hPlayer.ForceChangeTeam(TEAM_SPECTATOR, true)
 						ClientPrint(hPlayer, HUD_PRINTCENTER, "Singleplayer Mode in progress...\n              Please wait...")
+					}
 				}
 			}
 			else // blues/grays
@@ -3291,7 +3427,7 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 			else if(hIT && iScenario == 0)
 				SetPropInt(hGameRules, "m_halloweenScenario", 5)
 
-			if(hIT != hITLast)
+			if(iScenario == 5 && hIT != hITLast)
 			{
 				if(hIT)
 				{
@@ -3300,7 +3436,7 @@ if(hObjectiveResource && hObjectiveResource.IsValid()) hObjectiveResource.Accept
 					EmitSoundOnClient("Player.YouAreIT", hIT)
 					hIT.EmitSound("Halloween.PlayerScream")
 				}
-				
+
 				if(hITLast && hITLast.IsAlive())
 				{
 					ClientPrint(hITLast, HUD_PRINTTALK, "#TF_HALLOWEEN_BOSS_LOST_AGGRO")

@@ -115,6 +115,7 @@ gettysburg
     SpawnTemplate SpawnNobuild
 
     DisallowUpgrade "Overheal Expert"
+    DisallowUpgrade "Canteen Specialist"
     DisallowUpgrade
     {
         ItemName Deadshot
@@ -353,6 +354,7 @@ gettysburg
         {
             OriginalItemName "The Deus Specs"
             "fov override" 108
+            "special item description" "Sets FoV to 108."
         }
 
         //SCOUT
@@ -743,6 +745,7 @@ gettysburg
             "fire rate bonus with reduced health" 0.75
             "generate rage on damage" 3
             "rage receive scale" 0.7
+            spunup_damage_resistance 1
             "killstreak tier" 1
             "special item description" "Fire rate increases up an additional 25% the lower your health gets."
             "special item description 2" "Damage generates rage."
@@ -1501,6 +1504,7 @@ gettysburg
         "fire rate bonus with reduced health" 0.75
         "generate rage on damage" 3
         "rage receive scale" 0.7
+        spunup_damage_resistance 1
         "special item description" "Fire rate increases up an additional 25% the lower your health gets."
         "special item description 2" "Damage generates rage."
     }
@@ -1630,16 +1634,16 @@ gettysburg
     ItemAttributes //Stock medigun passive dmg reduction
     {
         SimilarToItem "TF_WEAPON_MEDIGUN"
-        "medigun passive attributes" "add cond when active|20|dmg from ranged reduced|0.75|mult dmgtaken from melee|0.75"
-        "special item description" "Current patient receives a passive 25% damage reduction."
+        "medigun passive attributes" "add cond when active|20|dmg from ranged reduced|0.85|mult dmgtaken from melee|0.85"
+        "special item description" "Current patient receives a passive 15% damage reduction."
     }
 
-    ItemAttributes //Kritz passive minicrits
-    {
-        SimilarToItem "The Kritzkrieg"
-        "medigun passive attributes" "add cond when active|16"
-        "special item description" "Current patient receives passive mini-crits."
-    }
+    // ItemAttributes //Kritz passive minicrits
+    // {    -- turns out medic doesn't need extra stuff to be good
+    //     SimilarToItem "The Kritzkrieg"
+    //     "medigun passive attributes" "add cond when active|16"
+    //     "special item description" "Current patient receives passive mini-crits."
+    // }
 
     ItemAttributes //Revolver buff
     {
@@ -1827,7 +1831,7 @@ gettysburg
         {
             "medic machinery beam" 2
             "heal rate bonus" 1.33
-            "revive rate" 6
+            "revive rate" 4
 
             "bombinomicon effect on death" 1
 
@@ -1925,6 +1929,13 @@ gettysburg
             TeleportWhere hidden
 
             CustomEyeParticle killstreak_t7_lvl2
+
+            ItemAttributes
+            {
+                ItemName TF_WEAPON_WRENCH //basically the jag without the building heal penalty
+                "construction rate increased" 1.3
+                "melee attack rate bonus" 0.7
+            }
 			
 			CharacterAttributes
 			{
@@ -1962,6 +1973,13 @@ gettysburg
             TeleportWhere hidden
 
             CustomEyeParticle killstreak_t7_lvl2
+
+            ItemAttributes
+            {
+                ItemName TF_WEAPON_WRENCH //basically the jag without the building heal penalty
+                "construction rate increased" 1.3
+                "melee attack rate bonus" 0.7
+            }
 			
 			CharacterAttributes
 			{
@@ -2008,7 +2026,7 @@ gettysburg
             {
                 Type Primary
                 Delay 1.25
-                Cooldown 3.33
+                Cooldown 4.5
                 IfSeeTarget 1
             }
 
@@ -2068,6 +2086,13 @@ gettysburg
                 Cooldown 30
                 IfHealthBelow 750
             }
+
+            ItemAttributes
+            {
+                ItemName "The Eureka Effect" //basically the jag without the building heal penalty
+                "construction rate increased" 1.3
+                "melee attack rate bonus" 0.7
+            }
             
             CharacterAttributes
             {
@@ -2098,7 +2123,7 @@ gettysburg
             Param  
             "EntFire(`enable_hologram_23_relay`, `trigger`)
              EntFire(`warphint`, `show`,null,1)
-             EntFire(`wave1_prewave_relay`, `trigger`,null,2)"
+             EntFire(`wave5_music_prewave_relay`, `Trigger`,null,2)"
         }
 
         StartWaveOutput
@@ -2128,7 +2153,7 @@ gettysburg
 
             FirstSpawnOutput
             {
-                Target wave1_prewave_relay_stop
+                Target wave5_music_prewave_relay_stop
                 Action Trigger
             }
         }
@@ -2199,7 +2224,7 @@ gettysburg
                         "paintkit_proto_def_index" 297
                         "set_item_texture_wear" 1
                         "fire rate bonus" 0.6
-                        "fire rate bonus with reduced health" 0.5
+                        "fire rate bonus with reduced health" 0.9
                     }
 
                     CharacterAttributes
@@ -2210,7 +2235,8 @@ gettysburg
                         "airblast vertical vulnerability multiplier" 0.5
                         "override footstep sound set" 7
                         "projectile penetration heavy" 1
-                        "voice pitch scale" 0
+                        "voice pitch scale" 0.7
+                        "gesture speed increase" 0.9
                         "no_jump" 1
                     }
 
@@ -2229,6 +2255,17 @@ gettysburg
                     }
 
                     AddCond {Index 87 Delay 6.5 Duration 13.5}
+                    AddCond {Index 51 IfHealthBelow 2501 Duration 6 Delay 0.1}
+                    AddCond {Index 20 IfHealthBelow 2501 Duration 6 Delay 0.1}
+                    AddCond {Index 16 IfHealthBelow 2501 Delay 0.1}
+
+                    Taunt
+                    {
+                        Name "Taunt: Crushing Defeat"
+                        IfHealthBelow 2501
+                        Repeats 1
+                        Delay 0.01
+                    }
 
                     AddAttribute
                     {
@@ -3499,7 +3536,7 @@ gettysburg
                 ItemAttributes
                 {
                     ItemName "Panic Attack Shotgun"
-                    "fire rate bonus" 2.5
+                    "fire rate penalty" 2.5
                     "bullets per shot bonus" 10
                     "damage penalty" 0.5
                     "mod max primary clip override" -1
@@ -3564,7 +3601,7 @@ gettysburg
                 ItemAttributes
                 {
                     ItemName "Panic Attack Shotgun"
-                    "fire rate bonus" 2.5
+                    "fire rate penalty" 2.5
                     "bullets per shot bonus" 10
                     "damage penalty" 0.5
                     "mod max primary clip override" -1
@@ -4382,13 +4419,14 @@ gettysburg
                 {
                     ItemName "The Frontier Justice"
                     "fire input on hit" "!activator^$BotCommand^build sentry at nearest sentry hint"
-                    "fire input on hit name restrict" player
+                    //"fire input on hit name restrict" player
                 }
 
                 ItemAttributes
                 {
                     ItemName "Upgradeable TF_WEAPON_WRENCH"
-                    "melee attack rate bonus" 0.8
+                    "melee attack rate bonus" 0.75
+                    "construction rate increased" 1.3
                 }
 
                 CharacterAttributes
@@ -4430,13 +4468,14 @@ gettysburg
                 {
                     ItemName "The Frontier Justice"
                     "fire input on hit" "!activator^$BotCommand^build sentry at nearest sentry hint"
-                    "fire input on hit name restrict" player
+                    //"fire input on hit name restrict" player
                 }
 
                 ItemAttributes
                 {
                     ItemName "Upgradeable TF_WEAPON_WRENCH"
-                    "melee attack rate bonus" 0.8
+                    "melee attack rate bonus" 0.75
+                    "construction rate increased" 1.3
                 }
 
                 CharacterAttributes
@@ -5625,7 +5664,7 @@ gettysburg
 
             WaitForAllDead 4a
             WaitBeforeStarting 30
-            WaitBetweenSpawns 30
+            WaitBetweenSpawnsAfterDeath 10
 
             TotalCurrency 770
 
@@ -6816,7 +6855,7 @@ gettysburg
             EntFire(`enable_hologram_all_relay`, `Trigger`,null,0.75)
             EntFire(`bombpath_clear`, `Trigger`,null,0.95)
             EntFire(`bombpath_left_case`, `PickRandom`,null,1.1)
-            EntFire(`wave5_music_prewave_relay`, `Trigger`,null,2)"
+            EntFire(`wave1_prewave_relay`, `trigger`,null,2)"
         }
 
         StartWaveOutput
@@ -6837,7 +6876,7 @@ gettysburg
 
             FirstSpawnOutput
             {
-                Target wave5_music_prewave_relay_stop
+                Target wave1_prewave_relay_stop
                 Action Trigger
             }
         }
@@ -8571,6 +8610,7 @@ gettysburg
                     Attributes MiniBoss
                     Attributes AlwaysCrit
                     WeaponRestrictions MeleeOnly
+                    MaxVisionRange 750
 
                     Tag bot_giant
 
@@ -9427,6 +9467,7 @@ gettysburg
                 WeaponResist
                 {
                     TF_WEAPON_REVOLVER 2
+                    TF_WEAPON_MINIGUN 0.8
                 }
 
                 ItemAttributes
@@ -9479,7 +9520,9 @@ gettysburg
                     "weapon always gib" 1
                     "hand scale" 1.1
 
-                    "add attributes on hit" "fire rate penalty|1.25|2|reload time increased|1.25|2|heal rate bonus|0.5|2"
+                    "add attributes on hit" "fire rate penalty|1.25|2|reload time increased|1.25|2|heal rate bonus|0.5|2|mod weapon blocks healing|1|2"
+                    "add cond on hit" 50
+                    "add cond on hit duration" 2
                     
                     "damage causes airblast" 1
                     "apply z velocity on damage" 100
@@ -9683,12 +9726,12 @@ gettysburg
             Where spawnbot_grave
             Where spawnbot_grave2
             Support 1
-            SpawnCount 2
-            MaxActive 2
+            SpawnCount 1
+            MaxActive 4
 
             WaitForAllSpawned 5c_gray_boss
             WaitBeforeStarting 10
-            WaitBetweenSpawns 7.5
+            WaitBetweenSpawns 2.5
 
             RandomChoice
             {

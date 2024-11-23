@@ -17,14 +17,11 @@ Oh_Dios_Mio_Es_Eso_Una_Pizza_Tower_Referencia
     NoThrillerTaunt 1
     EventPopfile Halloween
     NoCritPumpkin 1
-    ForceHoliday 2
     WaveStartCountdown 3
-    reversewinconditions 1
     TextPrintTime 0
-	enemyteamforreverse blue
-    AllowBotExtraSlots 1 
+    MaxRedPlayers 6
     RobotLimit 40
-    ExtraBotSlotsNoDeathcam 0
+    AllowBotExtraSlots 1
     DisableSound "music.mvm_lost_wave"
     PrecacheSound "militaryprecision.mp3"
     PrecacheSound "thousand_march_intro.mp3"
@@ -36,6 +33,7 @@ Oh_Dios_Mio_Es_Eso_Una_Pizza_Tower_Referencia
     PrecacheGeneric "materials/models/bots/boss_bot/carrier_tracks.vmt"
     PrecacheGeneric "materials/models/bots/boss_bot/carrier_tracks_backwards.vmt"
     PrecacheGeneric "materials/models/bots/boss_bot/carrier_tracks_forwards.vmt"
+    PrecacheModel "models/props_frontline/zeppelin_skybox.mdl"
     PrecacheModel "models/bots/soldier/bot_soldier_gibby.mdl"
     PrecacheModel "models/bots/heavy_boss/bot_heavy_boss_gibby.mdl"  
     PrecacheModel "models/bots/heavy_boss/bot_heavy_gray_boss.mdl"  
@@ -561,12 +559,6 @@ Oh_Dios_Mio_Es_Eso_Una_Pizza_Tower_Referencia
                 "GlowColor" "0 255 0 255"
                 "target" "!parent"
 				"targetname" "tower_glow"
-            }
-            OnParentKilledOutput
-            {
-                Target !self
-                Action kill
-                Delay 0.2
             }
             OnParentKilledOutput
             {
@@ -1370,6 +1362,29 @@ Oh_Dios_Mio_Es_Eso_Una_Pizza_Tower_Referencia
 				"force_map_reset" "1"
 				"classname" "game_round_win"
 			}
+            trigger_hurt // just ensures the bots dies
+			{
+				"TargetName" "sweepthosebots"
+				"origin" "0 0 0"
+				"mins" "-10000 -10000 -10000"
+				"maxs" "10000 10000 10000"
+				"damage" "80000"
+                "damagecap" "80000"
+                "damagemodel" "0"
+                "damagetype" "1"
+                "filtername" "filter_bossdeath" // ensures red team and boss not dies suddenly
+                "nodmgforce" "1"
+                "spawnflags" "1"
+                "StartDisabled" "1"
+			}
+			
+			filter_tf_bot_has_tag 
+            {
+                "targetname" "filter_bossdeath"
+                "Negated" "1"
+                "require_all_tags" "1"
+                "tags" "bot_bossdeath"
+            }
             logic_relay
 			{
 				"targetname" "redlose_relay"
@@ -1380,7 +1395,7 @@ Oh_Dios_Mio_Es_Eso_Una_Pizza_Tower_Referencia
                 "OnTrigger"  "thisshitwillkillyoubro*,disable,,0.15,1"
                 "OnTrigger" "thisshitwillkillyoubro_particle*,kill,,0,1"
                 "OnTrigger" "player*,$AddCond,22,0,-1"
-                "OnTrigger" "player*,$Suicide,,0.3,-1"
+                "OnTrigger" "sweepthosebots,enable,,0.3,-1"
                 "OnTrigger"  "pop_interface,PauseBotSpawning,,0,1"
                 "OnTrigger"  "wave_lost,Fade,,0.10,-1"
                 "OnTrigger"  "add5seconds,disable,,0,1"
@@ -1587,7 +1602,7 @@ Oh_Dios_Mio_Es_Eso_Una_Pizza_Tower_Referencia
             logic_relay
             {
                 "targetname" "addbossseconds"
-                "OnTrigger" "bignet,RunScriptCode,TextualTimer.Add(180),0,-1"
+                "OnTrigger" "bignet,RunScriptCode,TextualTimer.Add(120),0,-1"
                 "OnTrigger" "tf_gamerules,PlayVO,vo\announcer_time_added.mp3,0,-1"
                 "OnTrigger" "tf_gamerules,PlayVO,war_timer_increase.mp3,0,-1"
                 
@@ -2242,7 +2257,6 @@ Oh_Dios_Mio_Es_Eso_Una_Pizza_Tower_Referencia
         TFBot
         { Template T_TFBot_Sniper ClassIcon spy_sniper PreferClass Sniper }
     }
-    LuaScriptFile "scripts/killeveryoneandleave.lua"
     Mission // For Wave #
     {
         Where spawnbot
@@ -2398,7 +2412,7 @@ Oh_Dios_Mio_Es_Eso_Una_Pizza_Tower_Referencia
             Squad
             {
                 TFBot
-                { Template T_TFBot_Giant_Soldier ClassIcon 	soldier_and_demo_giant Name "Mutated Private" Attributes AlwaysCrit Item "The Diplomat" Item "Breach and Bomb" CharacterAttributes { "voice pitch scale" 0.2 } }
+                { Template T_TFBot_Giant_Soldier ClassIcon soldier_and_demo_giant Name "Mutated Private" Attributes AlwaysCrit Item "The Diplomat" Item "Breach and Bomb" CharacterAttributes { "voice pitch scale" 0.2 } }
                 TFBot
                 { Template T_TFBot_Medic_QuickFix Name "Fallen Doctor" Item "The Second Opinion" Item "Bunnyhopper's Ballistics Vest" CharacterAttributes { "voice pitch scale" 0.2 } }
                 TFBot
@@ -4359,6 +4373,7 @@ Oh_Dios_Mio_Es_Eso_Una_Pizza_Tower_Referencia
                 SpawnTemplate punch_projectiles
                 SpawnTemplate boss_dead_heavy
                 Skill expert
+                Tag bot_bossdeath
                 Health 110000
                 UseMeleeThreatPrioritization 1
                 Attributes UseBossHealthBar

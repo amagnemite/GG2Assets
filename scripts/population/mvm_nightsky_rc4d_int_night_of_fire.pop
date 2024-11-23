@@ -1472,7 +1472,7 @@ LobotomySchedule
 					Attributes AlwaysCrit
 					Item "Upgradeable TF_WEAPON_ROCKETLAUNCHER"
 					Item "The Infernal Impaler"
-					Item "Warlock's Warcloak"
+					// Item "Warlock's Warcloak"
 					ItemAttributes
 					{
 						ItemName "Upgradeable TF_WEAPON_ROCKETLAUNCHER"

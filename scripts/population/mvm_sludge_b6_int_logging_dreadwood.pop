@@ -2298,7 +2298,7 @@ population
 			
 				TFBot
 				{
-					ClassIcon	sniper_bushwacka_armored
+					ClassIcon	sniper_bush_armored
 					Health	1200
 					Name	"Bushwacka Sniper Large"
 					Scale	1.5

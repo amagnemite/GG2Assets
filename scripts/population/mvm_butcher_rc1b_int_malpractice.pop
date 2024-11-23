@@ -115,7 +115,10 @@ This_fucking_sucks,_actually.
 	PrecacheModel	"models/buildables/mini_dispenser_faithful.mdl"
 	PrecacheModel	"models/buildables/mini_dispenser_faithful_light.mdl"
 
-
+	// Precache for The Headless Doctor icon swapping
+	// Icons will not download without this
+	PrecacheGeneric	"materials/hud/leaderboard_class_medic_crossbow_burst_penetration" [$SIGSEGV]
+	PrecacheGeneric	"materials/hud/leaderboard_class_medic_blutsauger_lite" [$SIGSEGV]
 
 
 	CustomWeapon	// bot only variant that isn't cbt for players to deal with especially if the med bot in question is putting this on a hitscan bot

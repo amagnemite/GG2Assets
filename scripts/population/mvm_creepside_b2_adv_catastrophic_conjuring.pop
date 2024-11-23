@@ -13,10 +13,10 @@ WaveSchedule
     AddSentryBusterWhenDamageDealtExceeds 3000
     AddSentryBusterWhenKillCountExceeds 15
     Advanced 1
-    FixHuntsmanDamageBonus 0   
-    BodyPartScaleSpeed 7  
+    FixHuntsmanDamageBonus 0 [$SIGSEGV] 
+    BodyPartScaleSpeed 7 [$SIGSEGV]
 
-    PrecacheSound "merasmus_theme.mp3"  
+    PrecacheSound "merasmus_theme.mp3" [$SIGSEGV]
     // EventPopfile Halloween
 
     //spawnbot
@@ -2023,7 +2023,7 @@ WaveSchedule
     {
         StartWaveOutput
         {
-            Target wave_start_relay
+            Target wave_start_relay_ironman
             Action Trigger
         }
         DoneOutput
@@ -2075,6 +2075,23 @@ WaveSchedule
         //     }
         // }
 
+        WaveSpawn // Dummy
+        {
+            support Limited
+            TotalCount 1
+            SpawnCount 1
+            WaitBeforeStarting 0
+
+        
+            FirstSpawnOutput
+            {
+                Target "intel*"
+                Action SetReturnTime 
+                Param 45
+                Delay 1
+            }
+        }
+
         WaveSpawn
         {
             Name "timer"
@@ -2087,11 +2104,11 @@ WaveSchedule
             TotalCurrency 0
             Support Limited
             //DoneWarningSound "vo/halloween_merasmus/sf12_leaving08.mp3"
-            DoneOutput
-            {
-                Target bots_win
-                Action RoundWin
-            }
+            // DoneOutput
+            // {
+            //     Target bots_win
+            //     Action RoundWin
+            // }
             TFBot
             {
                 Class Scout 
@@ -2119,6 +2136,8 @@ WaveSchedule
                     "cancel falling damage" 1
                     "airblast vertical vulnerability multiplier" 0
                     "rage giving scale" 0
+                    "cannot be backstabbed" 1
+                    "dmg from melee increased" 0
 
                     "voice pitch scale" 0
                     "no_attack" 1
@@ -2211,10 +2230,10 @@ WaveSchedule
             MaxActive 1
             SpawnCount 1
             WaitBeforeStarting 0
-            WaitBetweenSpawns 25
+            WaitBetweenSpawns 32
             TotalCurrency 300
             Support 1
-
+            
             TFBot
             {
                 Template T_TFBot_Giant_Scout_Fast 
@@ -2260,7 +2279,7 @@ WaveSchedule
             Where spawnbot_flank_left
             Where spawnbot_flank_right
             TotalCount 125
-            MaxActive 6
+            MaxActive 12
             SpawnCount 1
             WaitBeforeStarting 5
             WaitBetweenSpawns 1
@@ -2397,17 +2416,19 @@ WaveSchedule
                     {
                         Class Sniper 
                         Tag "bot_hitbox"
-                        Scale 1
+                        Scale 1.6
                         Name "MERASMUS!"
-                        Tag "popext_usehumanmodel"
+                        Tag "popext_usehumanmodel" // no eye glow
                         Attributes IgnoreFlag
                         //Tag "popext_reprogrammed"
                         CharacterAttributes
                         {
-                            "head scale" 3
+                            //"head scale" 3
                             "cannot pick up intelligence" 1
                             "no_attack" 1
                             "voice pitch scale" 0
+                            "no_duck" 1 // fixes head hitbox
+                            //"cannot be backstabbed" 1
                         }
                     }
                 }
@@ -2430,9 +2451,9 @@ WaveSchedule
                 Class Sniper 
                 ClassIcon boss_merasmus
                 Attributes Miniboss
-                Attributes IgnoreFlag
+                //Attributes IgnoreFlag
                 Tag "bot_merasmus"
-                Tag "popext_mobber"
+                //Tag "popext_mobber"
                 Skill Expert
                 MaxVisionRange 2000
                 Scale 1
@@ -2450,7 +2471,7 @@ WaveSchedule
                     "cancel falling damage" 1
                     "airblast vertical vulnerability multiplier" 0.1
                     "rage giving scale" 0.1
-
+                    "deploy time decreased" 0
                     "voice pitch scale" 0
                     "cannot pick up intelligence" 1
                     "melee range multiplier" 0

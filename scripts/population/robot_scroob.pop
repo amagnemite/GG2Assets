@@ -1968,7 +1968,7 @@ WaveSchedule
 		{
 			Class Demoman
 			Name "Burst Fire Loch Demo"
-			ClassIcon demo_loch_burst
+			ClassIcon demo_loch_burst_giant	// Non-giant vmt points to the wrong file, GG.
 			Skill Expert
 			WeaponRestrictions PrimaryOnly
 			Attributes HoldFireUntilFullReload

@@ -181,6 +181,7 @@ WaveSchedule
 	PrecacheScriptSound "Halloween.BombinomiconSpin"
 
 	//colorcorrection
+	PrecacheGeneric 	"materials/hud/leaderboard_class_sentry_gun"
 	PrecacheGeneric 	"materials/colorcorrection/oxidize.raw"
 	PrecacheGeneric 	"materials/skybox/blackskyBK.vmt"
 	PrecacheGeneric 	"materials/skybox/blackskyDN.vmt"
@@ -219,6 +220,7 @@ WaveSchedule
 	PrecacheModel "models/weapons/w_bugbait.mdl"												//viro projectile
 	PrecacheModel "models/weapons/df_bow/df_bow.mdl"											//ceremonial
 	PrecacheModel "models/weapons/c_models/c_assault_battering_ram/c_assault_battering_ram.mdl"	//riot shield
+	PrecacheModel "models/weapons/custom/derringer.mdl"											//derringer
 
 
 //[/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////]//
@@ -1280,16 +1282,16 @@ WaveSchedule
 		Name  "flag1_bomb"
 		ResetTime 60000
 	}
-	FlagResetTime
-	{
-		Name  "flag2_bomb"
-		ResetTime 60000
-	}
-	FlagResetTime
-	{
-		Name  "flag3_bomb"
-		ResetTime 60000
-	}
+	// FlagResetTime
+	// {
+	// 	Name  "flag2_bomb"
+	// 	ResetTime 60000
+	// }
+	// FlagResetTime
+	// {
+	// 	Name  "flag3_bomb"
+	// 	ResetTime 60000
+	// }
 
 	//moral support
 	//MissionUnloadOutput
@@ -3644,12 +3646,12 @@ WaveSchedule
 				"origin" "546 2047 11"
 				"angles" "0 90 0"
 			}
-			info_target
-			{
-				"targetname" "spawn_boss_alt" //mono front manor
-				"origin" "0 -384 288"
-				"angles" "0 90 0"
-			}
+			// info_target
+			// {
+			// 	"targetname" "spawn_boss_alt" //mono front manor
+			// 	"origin" "0 -384 288"
+			// 	"angles" "0 90 0"
+			// }
 			info_target
 			{
 				"targetname" "spawn_purgatory" //player front manor
@@ -3821,14 +3823,14 @@ WaveSchedule
 				Target !parent
 				Action skin
 				Param 1
-				Delay 0.7
+				Delay 2
 			}
 			OnSpawnOutput
 			{
 				Target !parent
 				Action $PlaySound
 				Param =70|weapons/physcannon/physcannon_claws_open.wav
-				Delay 0.7
+				Delay 2
 			}
 		}
 		item_prize
@@ -4197,6 +4199,12 @@ WaveSchedule
 			{
 				"targetname" "1_becomes_zombie"
 			}
+			OnParentKilledOutput
+			{
+				Target 1_becomes_zombie
+				Action RunScriptCode
+				Param "Trespasser.SummonCoffin(self, activator)"
+			}
 		}
 		class_undead_2 //zombification
 		{
@@ -4205,6 +4213,12 @@ WaveSchedule
 			info_target
 			{
 				"targetname" "2_becomes_zombie"
+			}
+			OnParentKilledOutput
+			{
+				Target 2_becomes_zombie
+				Action RunScriptCode
+				Param "Trespasser.SummonCoffin(self, activator)"
 			}
 		}
 		class_undead_3 //zombification
@@ -4215,6 +4229,12 @@ WaveSchedule
 			{
 				"targetname" "3_becomes_zombie"
 			}
+			OnParentKilledOutput
+			{
+				Target 3_becomes_zombie
+				Action RunScriptCode
+				Param "Trespasser.SummonCoffin(self, activator)"
+			}
 		}
 		class_undead_4 //zombification
 		{
@@ -4223,6 +4243,12 @@ WaveSchedule
 			info_target
 			{
 				"targetname" "4_becomes_zombie"
+			}
+			OnParentKilledOutput
+			{
+				Target 4_becomes_zombie
+				Action RunScriptCode
+				Param "Trespasser.SummonCoffin(self, activator)"
 			}
 		}
 
@@ -4792,7 +4818,7 @@ WaveSchedule
 			training_annotation
 			{
 			  "targetname"   "sign_bomb"
-			  "display_text" "The robots have brought bombs!"
+			  "display_text" "The robots have brought a bomb!"
 			  "lifetime"     "8"
 			  "origin" "-1180 -486 203"
 			}
@@ -9129,6 +9155,8 @@ WaveSchedule
 				"onspawn" "deadly_cade_on,trigger,,0,-1"
 				"onspawn" "skeleton_crew_1_off,trigger,,0,-1" //necessary for ornament bug
 				"onspawn" "skeleton_crew_2_off,trigger,,0,-1" //necessary for ornament bug
+				"onspawn" "flag2_bomb,kill,,0,-1"
+				"onspawn" "flag3_bomb,kill,,0,-1"
 				"spawnflags" "2"
 			}
 			env_hudhint
@@ -12766,24 +12794,71 @@ WaveSchedule
 		// 	TotalCount 1
 		// 	MaxActive 1
 		// 	SpawnCount 1
-		// 	Support Limited
 		// 	TotalCurrency 500
 
-		// 	TFBot
+		// 	RandomChoice
 		// 	{
-		// 		Template Machine_Unarmed
-		// 		CharacterAttributes
+
+		// 		// HalloweenBoss
+		// 		// {
+		// 		// 	ClassIcon horsemann_lite
+		// 		// 	BossType HHH
+		// 		// 	Health 6000
+		// 		// 	SpawnCurrencyPack 1
+		// 		// 	Origin "0 1118 60"
+		// 		// 	//SpellDropRateRare 1
+		// 		// 	SpawnTemplate p_spell_common_2
+		// 		// }
+
+		// 		HalloweenBoss //mallet
 		// 		{
-		// 			"move speed bonus" 0.001
-		// 			"no_jump" 1
+		// 			ClassIcon mallet_lite
+		// 			BossType HHH
+		// 			Health 6000
+		// 			SpawnCurrencyPack 1
+		// 			Origin "0 1118 60"
+		// 			SpawnTemplate mallet_horsemann
+		// 			//SpellDropRateRare 1
+		// 			SpawnTemplate p_spell_common_2
 		// 		}
-		// 		FireInput
+
+		// 		// HalloweenBoss
+		// 		// {
+		// 		// 	ClassIcon monoculus_nys
+		// 		// 	BossType Monoculus
+		// 		// 	Health 9000
+		// 		// 	SpawnCurrencyPack 1
+		// 		// 	Origin "0 1118 60"
+		// 		// 	SpawnTemplate monoculus_nerf
+		// 		// 	SpawnTemplate p_spell_common_2
+		// 		// }
+
+		// 	}
+		// }
+
+		// WaveSpawn
+		// {
+		// 	Name "debug"
+		// 	Where spawnbot_back_right
+		
+		// 	TotalCount 999
+		// 	MaxActive 1
+		// 	SpawnCount 1
+		// 	TotalCurrency 500
+
+		// 	RandomChoice
+		// 	{
+		// 		TFBot
 		// 		{
-		// 			Target !self
-		// 			Action $SetLocalOrigin
-		// 			Param "0 666 0"
-		// 			Delay -1
-		// 			Repeats 1
+		// 			Template Zombie_Leaper
+		// 			FireInput
+		// 			{
+		// 				Target !self
+		// 				Action $SetLocalOrigin
+		// 				Param "0 666 16"
+		// 				Delay -1
+		// 				Repeats 1
+		// 			}
 		// 		}
 		// 	}
 		// }
@@ -15025,7 +15100,7 @@ WaveSchedule
 			{
 				ClassIcon monoculus_nys
 				BossType Monoculus
-				Health 10000
+				Health 9000
 				SpawnCurrencyPack 1
 				Origin "0 1118 60"
 				SpawnTemplate monoculus_nerf

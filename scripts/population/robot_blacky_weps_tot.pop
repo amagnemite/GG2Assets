@@ -2,7 +2,7 @@
 
 WaveSchedule
 {
-	PointTemplates	 	//	this thingy is to prevent other players from picking the haste powerup if the soldier dies while its in use
+	PointTemplates	[$SIGSEGV]	//	this thingy is to prevent other players from picking the haste powerup if the soldier dies while its in use
 	{
 		powerup_fix
 		{
@@ -14,11 +14,11 @@ WaveSchedule
 			}
 		}
 	}
-	SpawnTemplate powerup_fix	 
+	SpawnTemplate powerup_fix	[$SIGSEGV]
 	
 		//	SCOUT
 		
-	CustomWeapon  	
+	CustomWeapon [$SIGSEGV]	
 	{
 		Name								"T.K's Tsunami"
 		OriginalItemName					"TF_WEAPON_SCATTERGUN"
@@ -43,7 +43,7 @@ WaveSchedule
 			Upgrade		"projectile penetration"
 			ItemName	"T.K's Tsunami"
 		}
-	CustomWeapon  	
+	CustomWeapon [$SIGSEGV]	
 	{
 		Name				"Sacrificial lamb"
 		OriginalItemName	"The Soda Popper"
@@ -54,7 +54,7 @@ WaveSchedule
 	
 		//	WORKS PERFECTLY!
 	}
-	CustomWeapon  	
+	CustomWeapon [$SIGSEGV]	
 	{
 		Name				"Chop Suey!"
 		OriginalItemName	"The Flying Guillotine"
@@ -74,7 +74,7 @@ WaveSchedule
 		"special item description"				"Deals explosion AoE damage"
 		//	WORKS PERFECTLY!
 	}
-	CustomWeapon  	
+	CustomWeapon [$SIGSEGV]	
 	{
 		Name				"Tanksaber"
 		OriginalItemName	"Batsaber"
@@ -84,7 +84,7 @@ WaveSchedule
 		"special item description"	"-25% move speed when equipped"
 		//	WORKS PERFECTLY!
 	}
-	CustomWeapon  	
+	CustomWeapon [$SIGSEGV]	
 	{
 		Name				"Olympic Protection"
 		OriginalItemName	"Sun-on-a-Stick"
@@ -99,7 +99,7 @@ WaveSchedule
 	
 		//	SOLDIER
 		
-	CustomWeapon  	
+	CustomWeapon [$SIGSEGV]	
 	{
 		Name				"Minelayer"
 		OriginalItemName	"The Air Strike"
@@ -119,7 +119,7 @@ WaveSchedule
 		"special item description"		"Lays mines that last 15 seconds; +50% blast radius; when deployed: +25% damage invuln"
 		//	WORKS PERFECTLY
 	}
-	CustomWeapon  	
+	CustomWeapon [$SIGSEGV]	
 	{
 		Name				"Topneaa Torchlight"
 		OriginalItemName	"The Cow Mangler 5000"
@@ -134,7 +134,7 @@ WaveSchedule
 			Upgrade		"rocket specialist"
 			ItemName	"Topneaa Torchlight"
 		}
-	CustomWeapon  	
+	CustomWeapon [$SIGSEGV]	
 	{
 		Name				"Selfish Soldier (long buff)"
 		OriginalItemName	"The Buff Banner"
@@ -143,7 +143,7 @@ WaveSchedule
 		"special item description"	"+75% buff duration"
 		//	WORKS PERFECTLY!
 	}
-	//CustomWeapon  	
+	//CustomWeapon [$SIGSEGV]	
 	//{
 	//	Name				"Selfish Soldier (Haste)"
 	//	OriginalItemName	"The Concheror"
@@ -155,7 +155,7 @@ WaveSchedule
 	//	"special item description"	"personal Haste powerup; marked for death when banner is active; no passive HP regen"
 	//	//	WORKS PERFECTLY!
 	//}
-	CustomWeapon  	
+	CustomWeapon [$SIGSEGV]	
 	{
 		Name				"Selfish Soldier (Uber)"
 		OriginalItemName	"The Battalion's Backup"
@@ -166,7 +166,7 @@ WaveSchedule
 		"special item description"		"Personal Uber effect; no passive HP buff"
 		//	WORKS PERFECTLY!
 	}
-	CustomWeapon  	
+	CustomWeapon [$SIGSEGV]	
 	{
 		Name				"Critqualizer"
 		OriginalItemName	"The Equalizer"
@@ -179,7 +179,7 @@ WaveSchedule
 	
 		//	PYRO
 		
-	CustomWeapon  	
+	CustomWeapon [$SIGSEGV]	
 	{
 		Name				"Pressurized Phosphorus"
 		OriginalItemName	"The Backburner"
@@ -191,7 +191,7 @@ WaveSchedule
 		"special item description"		"Longer flame reach; double afterburn damage; double ammo consumption (no extra damage)"
 		//	WORKS PERFECTLY!
 	}
-	CustomWeapon  	
+	CustomWeapon [$SIGSEGV]	
 	{
 		Name				"Adren Rush"
 		OriginalItemName	"The Phlogistinator"
@@ -202,7 +202,7 @@ WaveSchedule
 		"special item description"		"Near instant 'mmmph' taunt; +15% fire vulnerability when equipped"
 		//	WORKS PERFECTLY!
 	}
-	CustomWeapon  	
+	CustomWeapon [$SIGSEGV]	
 	{
 		Name				"Friendly Fleet"
 		OriginalItemName	"The Dragon's Fury"
@@ -214,7 +214,7 @@ WaveSchedule
 		"special item description"				"Airblasting players give a short speed boost to both; -15% fire rate"
 		//	WORKS PERFECTLY!
 	}
-	CustomWeapon  	
+	CustomWeapon [$SIGSEGV]	
 	{
 		Name				"Hot Shot"
 		OriginalItemName	"Upgradeable TF_WEAPON_SHOTGUN_PRIMARY"
@@ -228,7 +228,7 @@ WaveSchedule
 		"special item description"		"Crits vs burning players; +50% weapon swap speed; -50% mag size"
 		//	WORKS PERFECTLY!
 	}
-	CustomWeapon  	
+	CustomWeapon [$SIGSEGV]	
 	{
 		Name				"TankScratcher"
 		OriginalItemName	"The Back Scratcher"
@@ -241,7 +241,7 @@ WaveSchedule
 		"special item description"		"+30% damage taken when deployed; minicrits instead of crits"
 		//	WORKS PERFECTLY!
 	}
-	CustomWeapon  	
+	CustomWeapon [$SIGSEGV]	
 	{
 		Name				"Torching Transmission"
 		OriginalItemName	"The Third Degree"
@@ -255,7 +255,7 @@ WaveSchedule
 	
 		//	DEMOMAN
 		
-	CustomWeapon  	
+	CustomWeapon [$SIGSEGV]	
 	{
 		Name				"Decaying Disorder"
 		OriginalItemName	"The Iron Bomber"
@@ -269,7 +269,7 @@ WaveSchedule
 		"special item description"		"Health packs give +50% health; -25% base damage; cant be healed by medics"
 		//	WORKS PERFECTLY!
 	}
-	CustomWeapon  	
+	CustomWeapon [$SIGSEGV]	
 	{
 		Name				"Bleeding Edge"
 		OriginalItemName	"The Loch-n-Load"
@@ -287,7 +287,7 @@ WaveSchedule
 		"special item description"			"Launches ornaments on enemies that causes bleed for 10s; -33% clip size that cant be upgraded"
 		//	WORKS PERFECTLY!
 	}
-	CustomWeapon  	
+	CustomWeapon [$SIGSEGV]	
 	{
 		Name				"Erratic Spammerfester"
 		OriginalItemName	"The Quickiebomb Launcher"
@@ -317,7 +317,7 @@ WaveSchedule
 			Upgrade		"maxammo secondary increased"
 			ItemName	"Erratic Spammerfester"
 		}
-	CustomWeapon  	
+	CustomWeapon [$SIGSEGV]	
 	{
 		Name				"Supercharger"
 		OriginalItemName	"The Splendid Screen"
@@ -329,7 +329,7 @@ WaveSchedule
 		"special item description"			"+700% charge impact damage; near zero charge duration"
 		//	WORKS PERFECTLY!
 	}
-	CustomWeapon  	
+	CustomWeapon [$SIGSEGV]	
 	{
 		Name				"Polished Powder"
 		OriginalItemName	"The Ullapool Caber"
@@ -345,7 +345,7 @@ WaveSchedule
 	
 		//	HEAVY
 	
-	CustomWeapon  
+	CustomWeapon [$SIGSEGV]
 	{
 		Name				"DShK"
 		OriginalItemName	"Tomislav"
@@ -375,7 +375,7 @@ WaveSchedule
 			Upgrade		"generate rage on damage"
 			ItemName	"DShK"
 		}
-	CustomWeapon  
+	CustomWeapon [$SIGSEGV]
 	{
 		Name				"Soviet Sanguisuge"
 		OriginalItemName	"TF_WEAPON_MINIGUN"
@@ -394,7 +394,7 @@ WaveSchedule
 			Upgrade	"heal on kill"
 			ItemName "Soviet Sanguisuge"
 		}
-	CustomWeapon  
+	CustomWeapon [$SIGSEGV]
 	{
 		Name				"Cardio Kingpin"
 		OriginalItemName	"Jupiter Jetpack"
@@ -403,7 +403,7 @@ WaveSchedule
 	//	"special item description"		"+100% move speed on wearer"
 		
 	}
-	CustomWeapon  
+	CustomWeapon [$SIGSEGV]
 	{
 		Name				"Omerta"
 		OriginalItemName	"The Family Business"
@@ -423,7 +423,7 @@ WaveSchedule
 		"special item description"		"+50% damage; +90% accuracy for 5s after kill; slows enemies on hit; -100% base accuracy; no minigun ammo"
 		//	WORKS PERFECTLY!
 	}
-	CustomWeapon  
+	CustomWeapon [$SIGSEGV]
 	{
 		Name				"Fast food"
 		OriginalItemName	"The Second Banana"
@@ -433,7 +433,7 @@ WaveSchedule
 		"special item description"				"Shortens Second Banana's feed animation by half; +67% faster deploy time; -50% health given when eaten; cant be dropped"
 		//	WORKS PERFECTLY
 	}
-	CustomWeapon  
+	CustomWeapon [$SIGSEGV]
 	{
 		Name				"Terminal Tumor"
 		OriginalItemName	"The Bread Bite"
@@ -445,7 +445,7 @@ WaveSchedule
 		
 		//	ENGINEER
 		
-	CustomWeapon  
+	CustomWeapon [$SIGSEGV]
 	{
 		Name				"High Voltage"
 		OriginalItemName	"The Pomson 6000"
@@ -466,7 +466,7 @@ WaveSchedule
 		"special item description"				"Shoots a long stream of particles that penetrate enemies; no sentry usage"
 		//	WORKS PERFECTLY!
 	}
-	CustomWeapon  
+	CustomWeapon [$SIGSEGV]
 	{
 		Name				"Express Dellivery"
 		OriginalItemName	"The Rescue Ranger"
@@ -480,7 +480,7 @@ WaveSchedule
 		"special item description"				"No mark for death when picking up buildings; +50% clip size; +50% fire rate; 1 metal cost on building-teleport pickup; cant heal buildings with RR bolts"
 		//	WORKS PERFECTLY!
 	}
-	CustomWeapon  
+	CustomWeapon [$SIGSEGV]
 	{
 		Name				"Metallic Milling"
 		OriginalItemName	"Roboot"
@@ -488,7 +488,7 @@ WaveSchedule
 		"special item description"		"Passive +25 metal regen every 5s"	
 		//	WORKS PERFECTLY!
 	}
-	CustomWeapon  
+	CustomWeapon [$SIGSEGV]
 	{
 		Name				"EMP Casings"
 		OriginalItemName	"The C.A.P.P.E.R"
@@ -500,7 +500,7 @@ WaveSchedule
 		"special item description"		"Removes sappers on hit; +80% accuracy; giants and armored enemies cant be stunned; a lot less reserve ammo"
 		//	WORKS PERFECTLY!
 	}
-	//CustomWeapon  
+	//CustomWeapon [$SIGSEGV]
 	//{
 	//	Name				"Immovable Object"
 	//	OriginalItemName	"TF_WEAPON_WRENCH"
@@ -514,7 +514,7 @@ WaveSchedule
 	//	"special item description"		"Buldings have x10 health; cant be repaired by wrench or picked up"
 	//	//	WORKS PERFECTLY! (albeit there's a loophole that can be made with this wrench, which i will not mention)
 	//}
-	CustomWeapon  
+	CustomWeapon [$SIGSEGV]
 	{
 		Name				"Delirious Deputy"
 		OriginalItemName	"The Gunslinger"
@@ -531,7 +531,7 @@ WaveSchedule
 		
 		//	MEDIC
 		
-	CustomWeapon  
+	CustomWeapon [$SIGSEGV]
 	{
 		Name				"Milk of the Sloppy"
 		OriginalItemName	"The Crusader's Crossbow"
@@ -544,7 +544,7 @@ WaveSchedule
 		"special item description"			"Milks enemies on hit for 8s; fires entire clip at once; slight spread; -90% damage"
 		//	WORKS PERFECTLY!
 	}
-	//CustomWeapon  
+	//CustomWeapon [$SIGSEGV]
 	//{
 	//	Name				"Heliumedes"
 	//	OriginalItemName	"The Kritzkrieg"
@@ -563,7 +563,7 @@ WaveSchedule
 	//		Upgrade	"uber duration bonus" // Upgrade name
 	//		ItemName "Heliumedes" // Apply upgrade restrictions only to those items if specified
 	//	}
-	CustomWeapon  
+	CustomWeapon [$SIGSEGV]
 	{
 		Name				"Passive Powerlifter"
 		OriginalItemName	"The Kritzkrieg"
@@ -572,7 +572,7 @@ WaveSchedule
 		"special item description"		"While healing players, they will recieve 2s minicrit on kill; Kritz Ubercharge is replaced with double damage"
 		//	WORKS PERFECTLY!
 	}
-	CustomWeapon  
+	CustomWeapon [$SIGSEGV]
 	{
 		Name				"Soul Split"
 		OriginalItemName	"The Quick-Fix"
@@ -592,7 +592,7 @@ WaveSchedule
 			Upgrade	"generate rage on heal"
 			ItemName "Soul Split"
 		}
-	CustomWeapon  
+	CustomWeapon [$SIGSEGV]
 	{
 		Name				"Uberweisen Saw"
 		OriginalItemName	"The Ubersaw"
@@ -603,7 +603,7 @@ WaveSchedule
 		"special item description"				"+25% uber gain per hit; when hitting enemies, hit yourself for 50hp"
 		//	WORKS PERFECTLY!
 	}
-	CustomWeapon  
+	CustomWeapon [$SIGSEGV]
 	{
 		Name				"Uber Container"
 		OriginalItemName	"The Vita-Saw"
@@ -615,7 +615,7 @@ WaveSchedule
 		
 	//	SNIPER
 		
-	CustomWeapon  
+	CustomWeapon [$SIGSEGV]
 	{
 		Name				"Brushfire"
 		OriginalItemName	"The Huntsman"
@@ -632,7 +632,7 @@ WaveSchedule
 			Upgrade	"projectile penetration"
 			ItemName "Brushfire"
 		}
-	CustomWeapon  
+	CustomWeapon [$SIGSEGV]
 	{
 		Name				"Bushman's Boon"
 		OriginalItemName	"Das Feelinbeterbager"
@@ -641,7 +641,7 @@ WaveSchedule
 		"uber on damage taken"			0.05	//	when hit, gain 5% of becoming ubercharged for 3 seconds
 		//	WORKS PERFECTLY!
 	}
-	CustomWeapon  
+	CustomWeapon [$SIGSEGV]
 	{
 		Name				"Croky Assassin"
 		OriginalItemName	"The Cleaner's Carbine"
@@ -650,7 +650,7 @@ WaveSchedule
 		"special item description"		"Crikey minicrits become invisibility spell for 8s"
 		//	WORKS PERFECTLY!
 	}
-	CustomWeapon  
+	CustomWeapon [$SIGSEGV]
 	{
 		Name				"Maniacal Mercenary"
 		OriginalItemName	"The Bushwacka"
@@ -663,7 +663,7 @@ WaveSchedule
 	
 		//	SPY
 		
-	CustomWeapon  
+	CustomWeapon [$SIGSEGV]
 	{
 		Name				"Eternal Earner"
 		OriginalItemName	"The Big Earner"
@@ -676,7 +676,7 @@ WaveSchedule
 		"special item description"		"Big Earner + YER properties combined"
 		//	WORKS PERFECTLY!
 	}
-	CustomWeapon  
+	CustomWeapon [$SIGSEGV]
 	{
 		Name				"Joker"
 		OriginalItemName	"The Black Rose"
@@ -687,7 +687,7 @@ WaveSchedule
 		"special item description"				"3s Crit on kill; crits forces non giants to laugh; +20% slower swing speed"
 		//	WORKS PERFECTLY!
 	}
-	CustomWeapon  
+	CustomWeapon [$SIGSEGV]
 	{
 		Name				"Cloakwork"
 		OriginalItemName	"TF_WEAPON_REVOLVER"
@@ -704,7 +704,7 @@ WaveSchedule
 		"special item description"				"Cloaks for 4s when hitting an enemy; +90% accuracy; +70% holster speed; -90% damage; cant disguise nor manually cloak via watches"
 		// WORKS PERFECTLY!
 	}
-	CustomWeapon  
+	CustomWeapon [$SIGSEGV]
 	{
 		Name				"Magnum Opus"
 		OriginalItemName	"The Enforcer"
@@ -718,7 +718,7 @@ WaveSchedule
 	
 	
 	
-	ExtraLoadoutItems  
+	ExtraLoadoutItems [$SIGSEGV]
 	{
 		Scout
 		{

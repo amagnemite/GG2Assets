@@ -817,13 +817,15 @@ Contact.ChargeCannon <- function() {
         Contact.WinWave7()
         return
     }
-    Contact.cannonPuppet.SetHealth(Min(25000,Contact.cannonPuppet.GetHealth()+8000))
+    //Contact.cannonPuppet.SetHealth(Min(20000,Contact.cannonPuppet.GetHealth()+8000))
     if(Contact.numCores > 3) { //set this to 3 when engi is done
+        Contact.cannonPuppet.SetHealth(Min(20000,Contact.cannonPuppet.GetHealth()+8000))
         EntFire("unlock_button", "trigger", null, 0.4)
         //ClientPrint(null, 4, "CANNON OVERCHARGED. FIRE AT WILL")
         CreateGameTextUpperFast("////CANNON OVERCHARGED. FIRE AT WILL////", 2, "255 255 0", "255 0 0")
         ClientPrint(null, 3, "\x07FF3F3F CANNON OVERCHARGED. PREPARE TO FIRE. HIT PANEL TO TRIGGER")
     } else {
+        Contact.cannonPuppet.SetHealth(Min(20000,Contact.cannonPuppet.GetHealth()+2500))
         //ClientPrint(null, 4, "CORE DEPOSITED. CANNON CHARGE AT " + (Contact.numCores*33).tostring() + "%" )
         CreateGameTextSuperFast("////CANNON CHARGE AT " + (Contact.numCores*33).tostring() + "%////", 2, "255 255 0", "255 0 0")
         ClientPrint(null, 3, "\x07FF3F3F CANNON CHARGE AT " + (Contact.numCores*33).tostring() + "%" )
